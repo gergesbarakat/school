@@ -1,8 +1,56 @@
 <x-guest-layout>
     <!-- Session Status -->
-    <x-auth-session-status class="mb-4" :status="session('status')" />
+    <div class="flex w-full">
 
-    <form method="POST" action="{{ route('login') }}">
+    <div class="flex flex-col justify-center items-center w-1/2">
+
+
+     <div class = "p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                role="alert">
+                أولاً		 قبل البدء في تعبئة الاستمارة يجب عليكِ معرفة نصاب كل معلمة والمواد المسندة لها .
+
+            </div>
+            <div class = "p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+            role="alert">
+            ثانيًا		 بعد تعبئة الاستمارة قومي بإرسالها على بريدنا الإلكتروني  jdwli@hotmail.com أو على واتساب 0506000795
+
+        </div>
+        <div class = "p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+        role="alert">
+        ثالثًا		 بعد ارسال الاستمارة قومي بتحويل المبلغ إلى أحد حسابتنا البنكية المرسلة لكِ عبر الواتس آب أو تويتر .
+
+    </div>
+    <div class = "p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                role="alert">
+                رابعًا		 بعد تحويل المبلغ سيتم البدء في تجهيز الجدول فورًا وسيكون الجدول جاهز خلال أقل من 24 ساعة بإذن الله تعالى .
+
+            </div>
+            <div class = "p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+            role="alert">
+            خامسًا		 المعلومات الخاطئة تتسب في تأخير تسليم الجدول لكم لذلك نرجوا التأكد من ( اسناد المواد للمعلمات ) قبل الارسال .
+
+        </div>
+        <div class = "p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+        role="alert">
+        سادسًا		 للاستفسار أو الملاحظات يمكنكم التواصل معنا ( اتصال - واتس آب ) عبر الرقم  795 6000 050  على مدار الساعة .
+
+    </div>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <form method="POST" class="flex flex-col justify-center items-center w-1/2" action="{{ route('login') }}">
         @csrf
 
         <!-- Email Address -->
@@ -44,4 +92,6 @@
             </x-primary-button>
         </div>
     </form>
+</div>
+
 </x-guest-layout>

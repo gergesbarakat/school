@@ -40,6 +40,11 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'school' => [ // <-- New guard
+            'driver' => 'session',
+            'provider' => 'schools',
+        ],
+
     ],
 
     /*
@@ -63,6 +68,10 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\User::class),
+        ],
+        'schools' => [ // <-- New provider
+            'driver' => 'eloquent',
+            'model' => App\Models\School::class,
         ],
 
         // 'users' => [
