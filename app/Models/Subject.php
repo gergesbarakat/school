@@ -4,7 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+    use App\Models\School;
+    use App\Models\Teacher;
+    use App\Models\SchoolClass;
 class Subject extends Model
 {
     /** @use HasFactory<\Database\Factories\SubjectFactory> */
@@ -20,5 +22,4 @@ class Subject extends Model
     {
         return $this->belongsTo(Teacher::class);
     }
-
-}
+ }

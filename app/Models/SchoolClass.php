@@ -5,18 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Teacher extends Model
+class SchoolClass extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'name',
-        'email',
-        'phone',
         'school_id',
-        'specialization',
-
-        'subject_id',
+        'grade_id',
+        'classroom_id',
+        'name',
     ];
 
     public function school()
@@ -24,8 +21,17 @@ class Teacher extends Model
         return $this->belongsTo(School::class);
     }
 
+    public function grade()
+    {
+        return $this->belongsTo(Grade::class);
+    }
     public function subject()
     {
-        return $this->belongsTo(Subject::class); // 👈 this line fixes the error
+        return $this->hasOne(Subject::class);
+    }
+
+    public function classroom()
+    {
+        return $this->belongsTo(Classroom::class);
     }
 }

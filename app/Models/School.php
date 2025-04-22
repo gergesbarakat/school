@@ -54,4 +54,8 @@ class School extends Authenticatable
     {
         return $this->hasMany(Grade::class);
     }
+    public function schoolClasses()
+{
+    return $this->hasMany(SchoolClass::class);
+}
 }

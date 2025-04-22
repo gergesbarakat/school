@@ -85,8 +85,7 @@
                     المدارس
                 </div>
             </a>
-        @endif
-        <a href="{{ route('subjects.index') }}"
+            <a href="{{ route('subjects.index') }}"
             class =  "hover:ml-4 w-full text-white  hover:bg-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
                 stroke="currentColor" class="w-4 h-4">
@@ -95,17 +94,6 @@
             </svg>
             <div>
                 المواد
-            </div>
-        </a>
-        <a href="{{ route('teachers.index') }} "
-            class =  "hover:ml-4 w-full text-white hover:bg-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                stroke="currentColor" class="w-4 h-4">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
-                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
-            </svg>
-            <div>
-                المدرسين
             </div>
         </a>
         <a href="{{ route('grades.index') }} "
@@ -128,6 +116,31 @@
             </svg>
             <div>
                 الصفوف
+            </div>
+        </a>
+
+        @endif
+        <a href="{{ route('school-classes.index') }} "
+            class =  "hover:ml-4 w-full text-white hover:bg-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
+            </svg>
+            <div>
+                الصفوف
+            </div>
+        </a>
+
+        <a href="{{ route('teachers.index') }} "
+            class =  "hover:ml-4 w-full text-white hover:bg-white hover:text-purple-500 dark:hover:text-blue-500 bg-[#1E293B] p-2 pl-8 rounded-full transform ease-in-out duration-300 flex flex-row items-center space-x-3">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                stroke="currentColor" class="w-4 h-4">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 6a7.5 7.5 0 107.5 7.5h-7.5V6z" />
+                <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5H21A7.5 7.5 0 0013.5 3v7.5z" />
+            </svg>
+            <div>
+                المدرسين
             </div>
         </a>
         <a href="{{ route('schedules.index') }} "

@@ -1,74 +1,62 @@
 <x-app-layout>
+    <body class="body bg-white dark:bg-[#0F172A]">
+        <x-side-bar></x-side-bar>
+        <div class="content ml-12 transform ease-in-out duration-500 px-2 md:px-5 pb-4">
+            <div class="mx-auto">
+                <h1 class="text-2xl font-semibold mb-4">Teachers</h1>
 
-    <body class = "body bg-white dark:bg-[#0F172A]">
-        <x-side-bar>
-
-        </x-side-bar>
-        <!-- CONTENT -->
-        <div class = "content ml-12 transform ease-in-out duration-500   px-2 md:px-5 pb-4 ">
-
-            <div class=" mx-auto">
-
-                @if ($errors->any())
-                    <div class = "p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
-                        role="alert">
-                        <span class = "font-medium">Danger alert!</span> {{ implode(' | ', $errors->all()) }}
-
+                @if (session('success'))
+                    <div class="bg-green-500 text-white p-3 rounded mb-4">
+                        {{ session('success') }}
                     </div>
                 @endif
 
-                <div class="relative flex flex-col p-3 w-full h-full text-slate-700 bg-white shadow-md rounded-xl bg-clip-border">
-                    <h1 class="text-2xl w-1/2 font-bold mb-4">جميع المدرسين</h1>
+                <table class="min-w-full table-auto border-collapse border border-gray-300">
+                    <thead>
+                        <tr>
+                            <th class="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">الاسم</th>
+                            <th class="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">البريد الالكتروني</th>
+                            <th class="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">الهاتف</th>
+                            <th class="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">المادة</th>
+                            @if (!Auth::guard('school')->check())
+                                <th class="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">المدرسة</th>
+                            @endif
+                            <th class="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">يعطي لهم سوابع</th>
 
-                    <a href="{{ route('teachers.create') }}"
-                        class="bg-blue-500 w-fit text-white px-4 py-2 rounded mb-4 inline-block">+ Add Teacher</a>
+                            <th class="px-4 py-2 border-b text-left text-sm font-medium text-gray-700">الاجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($teachers as $teacher)
+                            <tr class="odd:bg-gray-100">
+                                <td class="px-4 py-2 border-b text-sm">{{ $teacher->name }}</td>
+                                <td class="px-4 py-2 border-b text-sm">{{ $teacher->email }}</td>
+                                <td class="px-4 py-2 border-b text-sm">{{ $teacher->phone }}</td>
+                                <td class="px-4 py-2 border-b text-sm">{{ $teacher->subject->name }}</td>
+                                @if (!Auth::guard('school')->check())
+                                    <td class="px-4 py-2 border-b text-sm">{{ $teacher->school->name }}</td>
+                                @endif
+ <td class="px-4 py-2 border-b">{{ $teacher->specialization }}</td>
 
-                    @if (session('success'))
-                        <div class="bg-green-100 text-green-700 p-3 rounded mb-4">{{ session('success') }}</div>
-                    @endif
-
-                    <table class="w-full table-auto border border-gray-300">
-                        <thead>
-                            <tr class="bg-gray-100">
-                                <th class="p-2">#</th>
-                                <th class="p-2">الاسم</th>
-                                <th class="p-2">الايميل</th>
-                                <th class="p-2">الهاتف</th>
-                                <th class="p-2">لمادة</th>
-                                <th class="p-2">صورة</th>
-                                <th class="p-2">تعديل و حذف</th>
+                                <td class="px-4 py-2 border-b text-sm">
+                                    <a href="{{ route('teachers.edit', $teacher) }}" class="text-blue-500 hover:text-blue-700">تعديل</a> |
+                                    <form action="{{ route('teachers.destroy', $teacher) }}" method="POST" class="inline-block">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="text-red-500 hover:text-red-700">حذف</button>
+                                    </form>
+                                </td>
                             </tr>
-                        </thead>
-                        <tbody>
-                            @foreach ($teachers as $teacher)
-                                <tr class="text-center border-t">
-                                    <td class="p-2">{{ $loop->iteration }}</td>
-                                    <td class="p-2">{{ $teacher->name }}</td>
-                                    <td class="p-2">{{ $teacher->email }}</td>
-                                    <td class="p-2">{{ $teacher->phone }}</td>
-                                    <td class="p-2">{{ $teacher->subject->name ?? '-' }}</td>
-                                    <td class="p-2">
-                                        @if ($teacher->photo)
-                                            <img src="{{ asset('storage/' . $teacher->photo) }}" alt="photo"
-                                                class="w-10 h-10 rounded-full object-cover">
-                                        @else
-                                            <span>No Photo</span>
-                                        @endif
-                                    </td>
-                                    <td class="p-2">
-                                        <a href="{{ route('teachers.edit', $teacher->id) }}"
-                                            class="text-blue-500 hover:underline">Edit</a>
-                                        <form action="{{ route('teachers.destroy', $teacher->id) }}" method="POST"
-                                            class="inline-block" onsubmit="return confirm('Delete this teacher?')">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit"
-                                                class="text-red-500 hover:underline ml-2">Delete</button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                <div class="mt-4">
+                    <a href="{{ route('teachers.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">
+                        Add Teacher
+                    </a>
                 </div>
+            </div>
+        </div>
+    </body>
 </x-app-layout>

@@ -4,12 +4,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SchoolProfileEdit;
 use Illuminate\Support\Facades\Route;
 use App\Models\School;
-use \App\Http\Controllersauth\SchoolController;
 use \App\Http\Controllers\SubjectController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\ClassroomController;
+use App\Http\Controllers\SchoolClasssontroller;
 
 
 Route::middleware('auth:web')->group(function () {
@@ -24,6 +24,9 @@ Route::middleware('auth:web')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('schools', SchoolController::class);
+    Route::resource('classrooms', ClassroomController::class);
+    Route::get('/gradess', [ScheduleController::class, 'getGrades']);
+
 });
 
 Route::prefix('school')->name('school.')->group(function () {
@@ -56,16 +59,15 @@ Route::middleware('multiauth')->group(function () {
     Route::resource('subjects', SubjectController::class);
     Route::resource('teachers', TeacherController::class);
     Route::resource('grades', GradeController::class);
-    Route::resource('classrooms', ClassroomController::class);
+     Route::resource('school-classes', SchoolClasssontroller::class);
+
     Route::resource('schedules', ScheduleController::class);
 
-    Route::get('/gradess', [ScheduleController::class, 'getGrades']);
-    Route::get('/classroomss', [ScheduleController::class, 'getClassrooms']);
-    Route::get('/get-schedule', [ScheduleController::class, 'getSchedule']);
-    Route::get('/schedules/fetch', [ScheduleController::class, 'fetch'])->name('schedules.fetch');
 
-    Route::get('/gradess', [ScheduleController::class, 'getGrades']);
-    Route::get('/classroomss', [ScheduleController::class, 'getClassrooms']);
+     Route::get('/get-schedule', [ScheduleController::class, 'getSchedule']);
+    Route::get('/schedules/fetch', [ScheduleController::class, 'fetch'])->name('schedules.fetch');
+    Route::get('/classes/{gradeId}', [ScheduleController::class, 'getClassesByGrade'])->name('getClassesByGrade');
+
     Route::get('/get-schedule', [ScheduleController::class, 'getSchedule']);
     Route::get('/schedules/fetch', [ScheduleController::class, 'fetch'])->name('schedules.fetch');
 });

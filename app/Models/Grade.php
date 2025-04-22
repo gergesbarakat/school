@@ -22,5 +22,8 @@ class Grade extends Model
 {
     return $this->belongsToMany(School::class)->withPivot('number_of_classes')->withTimestamps();
 }
-
+public function schoolClasses()
+{
+    return $this->hasMany(SchoolClass::class);
+}
 }

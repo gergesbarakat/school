@@ -11,7 +11,9 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js" integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"
+        integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
 
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
@@ -22,7 +24,7 @@
 </head>
 
 <body class="font-sans antialiased h-screen min-h-screen top-0">
-     <div class="min-h-screen bg-gray-100 dark:bg-gray-900 top-0">
+    <div class="min-h-screen bg-gray-100 dark:bg-gray-900 top-0">
         {{-- @include('layouts.navigation') --}}
 
         <!-- Page Heading -->
@@ -35,7 +37,15 @@
         @endisset --}}
 
         <!-- Page Content -->
-         <main class="top-0 pt-20">
+
+        <main class="top-0 pt-20">
+            @if ($errors->any())
+            <div class = "ml-5 p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                role="alert">
+                <span class = "font-medium">Danger alert!</span> {{ implode(' | ', $errors->all()) }}
+
+            </div>
+        @endif
             {{ $slot }}
         </main>
     </div>
@@ -97,10 +107,8 @@
 
     // var tables = document.querySelectorAll('table')
 
-        let table = new DataTable('table');
-
-
- </script>
+    let table = new DataTable('table');
+</script>
 
 
 </html>
