@@ -11,6 +11,18 @@ use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\School_Auth\SchoolAuthenticatedSessionController;
+use App\Http\Controllers\School_Auth\SchoolConfirmablePasswordController;
+use App\Http\Controllers\School_Auth\SchoolEmailVerificationNotificationController;
+use App\Http\Controllers\School_Auth\SchoolEmailVerificationPromptController;
+use App\Http\Controllers\School_Auth\SchoolNewPasswordController;
+use App\Http\Controllers\School_Auth\SchoolPasswordController;
+use App\Http\Controllers\School_Auth\SchoolPasswordResetLinkController;
+use App\Http\Controllers\School_Auth\SchoolRegisteredUserController;
+use App\Http\Controllers\School_Auth\SchoolVerifyEmailController;
+
+
+
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
         ->name('register');
@@ -34,7 +46,6 @@ Route::middleware('guest')->group(function () {
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
 });
-
 Route::middleware('auth:web')->group(function () {
     Route::get('verify-email', EmailVerificationPromptController::class)
         ->name('verification.notice');
@@ -56,4 +67,51 @@ Route::middleware('auth:web')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+});
+Route::prefix('school')->name('school.')->group(function () {
+    Route::get('register', [SchoolRegisteredUserController::class, 'create'])
+        ->name('register');
+
+    Route::post('register', [SchoolRegisteredUserController::class, 'store']);
+
+    Route::get('login', [SchoolAuthenticatedSessionController::class, 'create'])
+        ->name('login');
+
+    Route::post('login', [SchoolAuthenticatedSessionController::class, 'store'])
+        ->name('login');
+    Route::get('forgot-password', [SchoolPasswordResetLinkController::class, 'create'])
+        ->name('password.request');
+
+    Route::post('forgot-password', [SchoolPasswordResetLinkController::class, 'store'])
+        ->name('password.email');
+
+    Route::get('reset-password/{token}', [SchoolNewPasswordController::class, 'create'])
+        ->name('password.reset');
+
+    Route::post('reset-password', [SchoolNewPasswordController::class, 'store'])
+        ->name('password.store');
+
+
+    Route::middleware('auth:school')->group(function () {
+        Route::get('verify-email', SchoolEmailVerificationPromptController::class)
+            ->name('verification.notice');
+
+        Route::get('verify-email/{id}/{hash}', SchoolVerifyEmailController::class)
+            ->middleware(['signed', 'throttle:6,1'])
+            ->name('verification.verify');
+
+        Route::post('email/verification-notification', [SchoolEmailVerificationNotificationController::class, 'store'])
+            ->middleware('throttle:6,1')
+            ->name('verification.send');
+
+        Route::get('confirm-password', [SchoolConfirmablePasswordController::class, 'show'])
+            ->name('password.confirm');
+
+        Route::post('confirm-password', [SchoolConfirmablePasswordController::class, 'store']);
+
+        Route::put('password', [SchoolPasswordController::class, 'update'])->name('password.update');
+
+        Route::post('logout', [SchoolAuthenticatedSessionController::class, 'destroy'])
+            ->name('logout');
+    });
 });

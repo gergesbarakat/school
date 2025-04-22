@@ -118,7 +118,7 @@
                                             </div>
                                         </td>
                                         <td class="p-4 border-b border-slate-200">
-                                            <p class="text-sm font-semibold text-slate-700">{{ $school->region }}</p>
+                                            <p class="text-sm font-semibold text-slate-700">{{ $school->area }}</p>
                                         </td>
                                         <td class="p-4 border-b border-slate-200">
                                             {{ $school->classrooms }}

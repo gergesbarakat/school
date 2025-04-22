@@ -22,7 +22,7 @@
 </head>
 
 <body class="font-sans antialiased h-screen min-h-screen top-0">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900 top-0">
+     <div class="min-h-screen bg-gray-100 dark:bg-gray-900 top-0">
         {{-- @include('layouts.navigation') --}}
 
         <!-- Page Heading -->
@@ -35,8 +35,7 @@
         @endisset --}}
 
         <!-- Page Content -->
-         
-        <main class="top-0 pt-20">
+         <main class="top-0 pt-20">
             {{ $slot }}
         </main>
     </div>

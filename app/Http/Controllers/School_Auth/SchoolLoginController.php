@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace App\Http\Controllers\School_Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -10,14 +10,14 @@ class SchoolLoginController extends Controller
 {
     public function showLoginForm()
     {
-        return view('auth.school-login');
+        return view('school-auth.login');
     }
 
     public function login(Request $request)
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::guard('school')->attempt($credentials, $request->remember)) {
+        if (Auth::guard('school')->attempt($credentials )) {
             return redirect()->intended('/school/dashboard');
         }
 

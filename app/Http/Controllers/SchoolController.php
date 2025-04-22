@@ -51,12 +51,12 @@ class SchoolController extends Controller
             // 'postal_code' => 'nullable|string|max:20',
             // 'country' => 'nullable|string|max:255', // Make country nullable
             // 'data' => 'nullable', // Allow data to be null
-               'logo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
+            'logo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             // 'grades_classes' => 'nullable|json', // Assuming this is a JSON field
             // 'state' => 'nullable|string|max:255',
             // 'city' => 'nullable|string|max:255',
 
-               'area' => 'required|string|max:255',
+            'area' => 'required|string|max:255',
             // Optional validation can be added as needed
         ]);
 
@@ -119,16 +119,15 @@ class SchoolController extends Controller
             'name' => 'required|string|max:255',
             'manager_name' => 'required|string|max:255',
             'email' => 'required|email|unique:schools,email,' . $school->id,
-            'password' => 'nullable|string|min:8|confirmed',
+            'password' => 'nullable|string|min:8',
             'address' => 'nullable|string|max:255',
             'phone' => 'nullable|string|max:20',
             'postal_code' => 'nullable|string|max:20',
             'country' => 'nullable|string|max:255', // Make country nullable
             'data' => 'nullable', // Allow data to be null
+            'logo' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Set default value for country if not provided
-        $country = $request->input('country', 'Unknown'); // Default to 'Unknown' if no country is provided
 
         // Update the school
         $school->update([
@@ -136,12 +135,19 @@ class SchoolController extends Controller
             'manager_name' => $request->manager_name,
             'email' => $request->email,
             'password' => $request->password ? bcrypt($request->password) : $school->password, // Only update password if provided
-            'address' => $request->address,
+            'address' => 'sdfsdf',
             'phone' => $request->phone,
-            'postal_code' => $request->postal_code ?? null,
-            'country' => $country, // Use default value if not provided
+            'postal_code' => $request->postal_code ?? 'sddsfsd',
+            'country' => 'adfgadfg', // Use default value if not provided
             'data' => $request->data,
         ]);
+        if ($request->hasFile('logo')) {
+            $path = $request->file('logo')->store('logos', 'public');
+            $school->logo = $path;
+            $school->save();
+        }
+
+
 
         return redirect()->route('schools.index')->with('success', 'School updated successfully');
     }
