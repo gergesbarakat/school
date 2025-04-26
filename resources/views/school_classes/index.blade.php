@@ -1,5 +1,5 @@
 <x-app-layout>
-    <body class="body bg-white dark:bg-[#0F172A]">
+    <body class="body bg-white  ">
         <x-side-bar></x-side-bar>
         <div class="content ml-12 transform ease-in-out duration-500 px-2 md:px-5 pb-4">
             <div class="mx-auto">

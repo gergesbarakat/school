@@ -10,17 +10,21 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
+      </head>
     <body class="w-full font-sans text-gray-900 antialiased">
-        <div class="w-full min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-gray-100 dark:bg-gray-900">
+        <div class="w-full min-h-screen flex flex-col sm:justify-center items-center  bg-gray-100 dark:bg-gray-900">
             {{-- {{ dd(Auth::guard('school')->check()); }} --}}
 
-            <div class="w-full   mt-6 px-6 py-4 bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
+            <div class="w-full     bg-white dark:bg-gray-800 shadow-md overflow-hidden sm:rounded-lg">
                 {{ $slot }}
             </div>
         </div>
     </body>
+    <script>
+            localStorage.setItem('theme', 'light');
+    document.documentElement.classList.remove('dark');
+
+    </script>
 </html>

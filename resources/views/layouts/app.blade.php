@@ -15,16 +15,16 @@
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
 
 
-    @vite(['resources/css/app.css', 'resources/js/app.js', 'resources/js/bootstrap.js', 'resources/css/datatables.css', 'resources/js/datatables.js'])
 
 </head>
 
-<body class="font-sans antialiased h-screen min-h-screen top-0">
-    <div class="min-h-screen bg-gray-100 dark:bg-gray-900 top-0">
+<body class="font-sans antialiased h-full min-h-screen top-0 bg-white  ">
+    <div class="min-h-screen h-full min-h-screen bg-gray-100 dark:bg-gray-900 top-0 bg-white  ">
         {{-- @include('layouts.navigation') --}}
 
         <!-- Page Heading -->
@@ -38,18 +38,36 @@
 
         <!-- Page Content -->
 
-        <main class="top-0 pt-20">
+        <main class="top-0 h-full min-h-screen pt-20 bg-white  ">
             @if ($errors->any())
-            <div class = "ml-5 p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
-                role="alert">
-                <span class = "font-medium">Danger alert!</span> {{ implode(' | ', $errors->all()) }}
+                <div class = "ml-5  p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                    role="alert">
+                    <span class = "font-medium">Danger alert!</span> {{ implode(' | ', $errors->all()) }}
 
-            </div>
-        @endif
+                </div>
+            @endif
+            {{-- <nav class = "flex px-5 py-3 text-gray-700  rounded-lg bg-gray-50 dark:bg-[#1E293B] " aria-label="Breadcrumb">
+                <ol class = "inline-flex items-center space-x-1 md:space-x-3">
+                    <li class = "inline-flex items-center">
+                        <a href="#" class = "inline-flex items-center text-sm font-medium text-gray-700 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                            <svg class = "w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                            Home
+                        </a>
+                    </li>
+                    <li>
+                        <div class = "flex items-center">
+                            <svg class = "w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fillRule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clipRule="evenodd"></path></svg>
+                            <a href="#" class = "ml-1 text-sm font-medium text-gray-700 hover:text-gray-900 md:ml-2 dark:text-gray-400 dark:hover:text-white">Templates</a>
+                        </div>
+                    </li>
+                </ol>
+            </nav> --}}
             {{ $slot }}
         </main>
     </div>
 </body>
+
+
 <script>
     const sidebar = document.querySelector("aside");
     const maxSidebar = document.querySelector(".max")
@@ -61,17 +79,17 @@
     const moon = document.querySelector(".moon")
     const sun = document.querySelector(".sun")
 
-    function setDark(val) {
-        if (val === "dark") {
-            document.documentElement.classList.add('dark')
-            moon.classList.add("hidden")
-            sun.classList.remove("hidden")
-        } else {
-            document.documentElement.classList.remove('dark')
-            sun.classList.add("hidden")
-            moon.classList.remove("hidden")
-        }
-    }
+    // function setDark(val) {
+    //     if (val === "dark") {
+    //         document.documentElement.classList.add('dark')
+    //         moon.classList.add("hidden")
+    //         sun.classList.remove("hidden")
+    //     } else {
+    //         document.documentElement.classList.remove('dark')
+    //         sun.classList.add("hidden")
+    //         moon.classList.remove("hidden")
+    //     }
+    // }
 
     function openNav() {
         if (sidebar.classList.contains('-translate-x-48')) {
@@ -108,7 +126,33 @@
     // var tables = document.querySelectorAll('table')
 
     let table = new DataTable('table');
+    $.fn.dataTable.ext.errMode = function(settings, helpPage, message) {
+        console.warn("DataTables warning: " + message);
+    };
+
+    localStorage.theme = 'light';
+    document.documentElement.classList.remove('dark');
 </script>
 
 
 </html>
+<script>
+    localStorage.setItem('theme', 'light');
+
+    // Make sure dark class is removed
+    document.documentElement.classList.remove('dark');
+
+    // Optional: override matchMedia
+    window.matchMedia = () => {
+        return {
+            matches: false,
+            addListener: function() {},
+            removeListener: function() {}
+        };
+    };
+</script>
+<script>
+    // Set theme to light explicitly
+    localStorage.setItem('theme', 'light');
+    document.documentElement.classList.remove('dark');
+</script>

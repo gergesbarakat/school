@@ -19,6 +19,7 @@ class SchoolController extends Controller
     public function index()
     {
         $schools = School::all(); // Retrieve all schools
+        
         return view('schools.index', compact('schools'));
     }
 

@@ -1,4 +1,5 @@
 <x-app-layout>
+
     <body class="body bg-white dark:bg-[#0F172A]">
         <x-side-bar></x-side-bar>
 
@@ -12,81 +13,132 @@
 
                     <!-- Grade and Classroom Filters -->
                     <div class="grid grid-cols-2 gap-4 mb-4">
+                        @if (Auth::guard('web')->check())
+                            <div class="form-group">
+                                <label for="school" class="block">school</label>
+                                <select disabled id="school" name="school" class="form-control" required>
+                                    <option value="{{ $school_id }}">{{ $schools->find($school_id)->name }}</option>
+                                </select>
+                                <input type="hidden" name="school_id" id='school_id' value="{{ $school_id }}"
+                                    class="hidden">
+
+                            </div>
+                        @else
+                            <input type="hidden" name="school_id" id='school_id' value="{{ $school_id }}"
+                                class="hidden">
+                        @endif
                         <div class="form-group">
                             <label for="grade" class="block">Grade</label>
-                            <select id="grade" name="grade" class="form-control" required>
-                                <option value="">Select Grade</option>
-                                @foreach ($grades as $grade)
-                                    <option value="{{ $grade->id }}" {{ request('grade') == $grade->id ? 'selected' : '' }}>{{ $grade->name }}</option>
-                                @endforeach
+                            <select disabled id="grade" name="grade" class="form-control" required>
+                                <option value="{{ $grade_id }}">{{ $grade->find($grade_id)->name }}</option>
                             </select>
                         </div>
+                        <input type="hidden" name="grade" id='grade_id' value="{{ $grade_id }}" class="hidden">
+                        <input type="hidden" name="classroom" id='classroom' value="{{ $class_id }}"
+                            class="hidden">
 
                         <div class="form-group">
                             <label for="classroom" class="block">Classroom</label>
-                            <select id="classroom" name="classroom" class="form-control" required>
-                                <option value="">Select Classroom</option>
-                                @foreach ($classrooms as $classroom)
-                                    <option value="{{ $classroom->id }}" {{ request('classroom') == $classroom->id ? 'selected' : '' }}>{{ $classroom->name }}</option>
-                                @endforeach
+                            <select id="classroom" disabled name="classroom" class="form-control" required>
+                                <option value="{{ $class_id }}">{{ $classroom->find($class_id)->name }}</option>
+
                             </select>
                         </div>
                     </div>
 
                     <!-- Table for Adding Schedule -->
                     <div class="mt-8">
-                        <table class="table-auto w-full border-collapse" id="schedule-table">
+                        <style>
+                            table.dataTable thead th,
+                            table.dataTable tfoot th {
+                                text-align: center;
+                                justify-content: center;
+                                align-items: center;
+                                border: 1px solid black;
+
+                            }
+
+                            table.dataTable.row-border>tbody>tr>*,
+                            table.dataTable.display>tbody>tr>* {
+                                text-align: center;
+                                justify-content: center;
+                                align-items: center;
+                                border: 1px solid black;
+
+                            }
+                        </style>
+                        <table id="schedule-table" class="overflow-x-scroll display justify-center text-center"
+                            style="width:100%">
                             <thead>
-                                <tr>
-                                    <th class="border px-4 py-2">classes</th>
-                                    @foreach ($schoolClasses as $schoolClass)
-                                        <th class="border px-4 py-2">{{ $schoolClass }}</th>
+                                <tr class="border-black">
+                                    <th colspan="3" width="30%">الصفوف</th>
+                                    @foreach ($school_classes as $school_class)
+                                        <th class="border-black  " colspan="1">{{ $school_class->name }}</th>
                                     @endforeach
 
                                 </tr>
-                                <tr>
-                                    <th class="border px-4 py-2">Row Number</th>
-                                    <th class="border px-4 py-2">Subject</th>
-                                    <th class="border px-4 py-2">Classes per Week</th>
-                                    <th class="border px-4 py-2">Teacher</th>
+                                <tr class="border-black">
+                                    <th class="border-black bg-red-200" colspan="1" data-dt-order="disable">العدد
+                                    </th>
+                                    <th class="border-black bg-red-200" colspan="1">المواد</th>
+                                    <th class="border-black bg-red-200" colspan="1">عدد الحصص</th>
+                                    @foreach ($school_classes as $school_class)
+                                        <th class="border-black bg-red-200">المعلمة</th>
+                                    @endforeach
+
+
                                 </tr>
                             </thead>
                             <tbody>
-                                <!-- Row Template -->
-                                <tr>
-                                    <td class="border px-4 py-2" class="row-number">1</td>
-                                    <td class="border px-4 py-2">
-                                        <select name="subjects[]" class="form-control">
-                                            <option value="">Select Subject</option>
-                                            @foreach ($schoolClasses as $schoolClass)
-                                                <option value="{{ $schoolClass->subject_id }}">{{ $schoolClass->subject->name }}</option>
+                                <tr class="border-black">
+                                    <td class="bg-red-200 number  rownumber"> 1 </td>
+
+                                    <td class="bg-red-200">
+                                        <select id="row" name="row[0][subject]" class="form-control" required>
+                                            @foreach ($subjects as $subject)
+                                                <option value="{{ $subject->id }}">{{ $subject->name }} </option>
                                             @endforeach
+
                                         </select>
                                     </td>
-                                    <td class="border px-4 py-2">
-                                        <input type="number" name="classes_per_week[]" class="form-control" min="1" required>
+                                    <td class="bg-red-200">
+                                        <input type="number" name="row[0][classes_per_week]" class="form-control"
+                                            min="1" required>
                                     </td>
-                                    <td class="border px-4 py-2">
-                                        <select name="teachers[]" class="form-control">
-                                            <option value="">Select Teacher</option>
-                                            @foreach ($teachers as $teacher)
-                                                <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
+                                    @foreach ($school_classes as $school_class)
+                                        <td>
+                                            <select id="row " name="row[0][class{{ $school_class->id }}][teacher]"
+                                                class="form-control" required>
+                                                @foreach ($teachers as $teacher)
+                                                    <option value="{{ $teacher->id }}">{{ $teacher->name }} </option>
+                                                @endforeach
+
+                                            </select>
+                                        </td>
+                                    @endforeach
+
+
+
                                 </tr>
                             </tbody>
-                        </table>
+                            <tfoot>
+                                <tr class="border-black">
+                                    <th colspan="3">اجمالي الحصص 55</th>
 
+                                </tr>
+                            </tfoot>
+                        </table>
                         <div class="mt-4">
-                            <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md" id="add-row-btn">Add Row</button>
+                            <button type="button" class="px-4 py-2 bg-gray-500 text-white rounded-md"
+                                id="add-row-btn">Add Row</button>
                         </div>
 
                     </div>
 
                     <!-- Submit Button -->
                     <div class="mt-4">
-                        <button type="submit" class="px-6 py-3 bg-blue-500 text-white rounded-md">Save Schedule</button>
+                        <button type="submit" class="px-6 py-3 bg-blue-500 text-white rounded-md">Save
+                            Schedule</button>
                     </div>
                 </form>
             </div>
@@ -94,37 +146,46 @@
 
         <script>
             // Add new row functionality
-            let rowNumber = 2;
-
-            document.getElementById('add-row-btn').addEventListener('click', function () {
+            let rowNumber = 1;
+            document.getElementById('add-row-btn').addEventListener('click', function() {
                 // Create a new row
+
                 const newRow = document.createElement('tr');
                 newRow.innerHTML = `
-                    <td class="border px-4 py-2">${rowNumber}</td>
-                    <td class="border px-4 py-2">
-                        <select name="subjects[]" class="form-control">
-                            <option value="">Select Subject</option>
-                            @foreach ($schoolClasses as $schoolClass)
-                                <option value="{{ $schoolClass->subject_id }}">{{ $schoolClass->subject->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td class="border px-4 py-2">
-                        <input type="number" name="classes_per_week[]" class="form-control" min="1" required>
-                    </td>
-                    <td class="border px-4 py-2">
-                        <select name="teachers[]" class="form-control">
-                            <option value="">Select Teacher</option>
-                            @foreach ($teachers as $teacher)
-                                <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                `;
+                                <tr class="border-black">
+                                    <td class="bg-red-200 number  rownumber"> ` + (parseInt($('.rownumber:last')
+                .text()) + 1) + ` </td>
 
-                // Append the new row to the table
+                                    <td class="bg-red-200">
+                                        <select id="row" name="row[` + rowNumber + `][subject]" class="form-control" required>
+                                            @foreach ($subjects as $subject)
+                                                <option value="{{ $subject->id }}">{{ $subject->name }} </option>
+                                            @endforeach
+
+                                        </select>
+                                    </td>
+                                    <td class="bg-red-200">
+                                        <input type="number" name="row[` + rowNumber + `][classes_per_week]" class="form-control"
+                                            min="1" required>
+                                    </td>
+                                    @foreach ($school_classes as $school_class)
+                                        <td>
+                                            <select id="row " name="row[` + rowNumber + `][class{{ $school_class->id }}][teacher]" class="form-control" required>
+                                                @foreach ($teachers as $teacher)
+                                                    <option value="{{ $teacher->id }}">{{ $teacher->name }} </option>
+                                                @endforeach
+
+                                            </select>
+                                        </td>
+                                    @endforeach
+
+
+
+                                </tr>`;
+
                 document.querySelector('#schedule-table tbody').appendChild(newRow);
                 rowNumber++; // Increment the row number for the next row
+
             });
         </script>
     </body>

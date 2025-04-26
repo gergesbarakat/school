@@ -16,9 +16,11 @@ use Illuminate\Database\Eloquent\Model;
         'school_id',
         'grade_id',
         'class_id',
-        'day',
-        'time',
-        'teacher_id',
+        'classroom_id',
+         'teacher_id',
+        'classes_per_week',
+        'row_id',
+
         'subject_id',
     ];
 
@@ -32,5 +34,5 @@ use Illuminate\Database\Eloquent\Model;
 
 
 
-    
+
 }

@@ -10,6 +10,7 @@ use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\GradeController;
 use App\Http\Controllers\ClassroomController;
 use App\Http\Controllers\SchoolClasssontroller;
+use App\Http\Controllers\SchoolController;
 
 
 Route::middleware('auth:web')->group(function () {
@@ -25,7 +26,6 @@ Route::middleware('auth:web')->group(function () {
 
     Route::resource('schools', SchoolController::class);
     Route::resource('classrooms', ClassroomController::class);
-    Route::get('/gradess', [ScheduleController::class, 'getGrades']);
 
 });
 
@@ -55,6 +55,18 @@ Route::prefix('school')->name('school.')->group(function () {
 });
 
 Route::middleware('multiauth')->group(function () {
+    Route::get('/', function () {
+        if(Auth::guard('school')->check()){
+            return view('school-dashboard', [
+                'schools' => School::all(),
+            ]);
+        }else{
+            return view('dashboard', [
+                'schools' => School::all(),
+            ]);
+        }
+
+    })->name('dashboard');
 
     Route::resource('subjects', SubjectController::class);
     Route::resource('teachers', TeacherController::class);
@@ -70,6 +82,8 @@ Route::middleware('multiauth')->group(function () {
 
     Route::get('/get-schedule', [ScheduleController::class, 'getSchedule']);
     Route::get('/schedules/fetch', [ScheduleController::class, 'fetch'])->name('schedules.fetch');
+
+
 });
 
 
