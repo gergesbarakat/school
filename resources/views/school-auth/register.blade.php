@@ -1,52 +1,61 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('school.register') }}">
         @csrf
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
+        <div class="flex flex-col justify-center sm:h-screen p-4">
+            <div class="max-w-md w-full mx-auto border border-slate-300 rounded-2xl p-8">
+                <div class="text-center mb-12">
+                    <a href="javascript:void(0)"><img src="https://readymadeui.com/readymadeui.svg" alt="logo"
+                            class="w-40 inline-block" />
+                    </a>
+                </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+                     <div class="space-y-6">
+                        <div>
+                            <label class="text-slate-800 text-sm font-medium mb-2 block">name </label>
+                            <input name="name" type="text"
+                                class="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
+                                placeholder="Enter name" />
+                        </div>
+                        <div>
+                            <label class="text-slate-800 text-sm font-medium mb-2 block">Email Id</label>
+                            <input name="email" type="text"
+                                class="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
+                                placeholder="Enter email" />
+                        </div>
+                        <div>
+                            <label class="text-slate-800 text-sm font-medium mb-2 block">Password</label>
+                            <input name="password" type="password"
+                                class="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
+                                placeholder="Enter password" />
+                        </div>
+                        <div>
+                            <label class="text-slate-800 text-sm font-medium mb-2 block">password_confirmation</label>
+                            <input name="password_confirmation" type="password "
+                                class="text-slate-800 bg-white border border-slate-300 w-full text-sm px-4 py-3 rounded-md outline-blue-500"
+                                placeholder="Enter password_confirmation" />
+                        </div>
+                        <div class="flex items-center">
+                            <input id="remember-me" name="remember-me" type="checkbox"
+                                class="h-4 w-4 shrink-0 text-blue-600 focus:ring-blue-500 border-slate-300 rounded" />
+                            <label for="remember-me" class="text-slate-800 ml-3 block text-sm">
+                                I accept the <a href="javascript:void(0);"
+                                    class="text-blue-600 font-medium hover:underline ml-1">Terms and Conditions</a>
+                            </label>
+                        </div>
+                    </div>
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
+                    <div class="mt-12">
+                        <button type="button" onclick="document.querySelector('form').submit();"
+                            class="w-full py-3 px-4 text-sm tracking-wider font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none">
+                            Create an account
+                        </button>
+                    </div>
+                    <p class="text-slate-800 text-sm mt-6 text-center">Already have an account? <a
+                            href="{{ route('school.login') }}"
+                            class="text-blue-600 font-medium hover:underline ml-1">Login
+                            here</a></p>
+             </div>
         </div>
     </form>
 </x-guest-layout>

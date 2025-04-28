@@ -20,7 +20,7 @@ class SchoolController extends Controller
     {
         $schools = School::all(); // Retrieve all schools
         
-        return view('schools.index', compact('schools'));
+         return view('schools.index', compact('schools'));
     }
 
     /**

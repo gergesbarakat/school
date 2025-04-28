@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html class="light" lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="utf-8">
@@ -15,7 +15,7 @@
         integrity="sha512-v2CJ7UaYy4JwqLDIrZUI/4hqeoQieOmAZNXBeQyjo21dadnwR+8ZaIJVT8EE2iyI61OV8e6M8PP2/4hpQINQ/g=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
 
     <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
 
@@ -123,36 +123,11 @@
 
     }
 
-    // var tables = document.querySelectorAll('table')
+    tailwind.config = {
+        darkMode: 'class',
+    }
 
-    let table = new DataTable('table');
-    $.fn.dataTable.ext.errMode = function(settings, helpPage, message) {
-        console.warn("DataTables warning: " + message);
-    };
-
-    localStorage.theme = 'light';
-    document.documentElement.classList.remove('dark');
-</script>
+    </script>
 
 
 </html>
-<script>
-    localStorage.setItem('theme', 'light');
-
-    // Make sure dark class is removed
-    document.documentElement.classList.remove('dark');
-
-    // Optional: override matchMedia
-    window.matchMedia = () => {
-        return {
-            matches: false,
-            addListener: function() {},
-            removeListener: function() {}
-        };
-    };
-</script>
-<script>
-    // Set theme to light explicitly
-    localStorage.setItem('theme', 'light');
-    document.documentElement.classList.remove('dark');
-</script>
