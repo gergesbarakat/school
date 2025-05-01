@@ -47,7 +47,7 @@ class SchoolRegisteredUserController extends Controller
             }
         }
         $request->validate([
-            'name' => ['required', 'string', 'max:255'],
+            'name' => ['required', 'string', 'max:255','unique:' . School::class],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . School::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
             'address' => 'nullable|string',
@@ -80,9 +80,13 @@ class SchoolRegisteredUserController extends Controller
         ]);
 
         event(new Registered($user));
+        $credentials = $request->only('email', 'password');
 
-        Auth::guard('school')->login($user);
-
-        return redirect(route('school.school-dashboard', absolute: false));
-    }
+        if (Auth::guard('school')->attempt($credentials) ) {
+            return redirect()->intended('/school/dashboard');
+        }
+        return back()->withErrors([
+            'email' => 'Invalid credentials.',
+        ]);
+     }
 }

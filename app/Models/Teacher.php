@@ -11,11 +11,10 @@ class Teacher extends Model
 
     protected $fillable = [
         'name',
-        'email',
-        'phone',
-        'school_id',
-        'specialization',
-
+          'school_id',
+         'no7',
+        'number_of_classes',
+        'row_id',
         'subject_id',
     ];
 

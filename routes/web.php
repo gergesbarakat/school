@@ -45,8 +45,10 @@ Route::prefix('school')->name('school.')->group(function () {
         Route::delete('/profile', [SchoolProfileEdit::class, 'destroy'])->name('profile.destroy');
     });
 });
+Route::resource('teachers', TeacherController::class);
 
 Route::middleware('multiauth')->group(function () {
+
     Route::get('/', function () {
         if (Auth::guard('web')->check()) {
             return view('dashboard', [
@@ -60,8 +62,20 @@ Route::middleware('multiauth')->group(function () {
 
     })->name('dashboard');
 
+    Route::get('school', function () {
+        if (Auth::guard('web')->check()) {
+            return view('dashboard', [
+                'schools' => School::all(),
+            ]);
+        } else {
+            return view('school-dashboard', [
+                'schools' => School::all(),
+            ]);
+        }
+
+    })->name('dashboard');
+
     Route::resource('subjects', SubjectController::class);
-    Route::resource('teachers', TeacherController::class);
     Route::resource('grades', GradeController::class);
     Route::resource('school-classes', SchoolClasssontroller::class);
 

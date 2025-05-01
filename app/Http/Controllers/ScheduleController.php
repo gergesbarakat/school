@@ -10,32 +10,96 @@ use App\Models\SchoolClass;
 use App\Models\Subject;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 
 class ScheduleController extends Controller
 {
     public function index(Request $request)
     {
-        $classroom = Classroom::find($request->get('class_id'));
-        $grade = Grade::find($request->get('grade_id'));
-        $school = School::find($request->get('school_id'));
-        $school_classes = SchoolClass::get()->where('school_id', $request->input('school_id'));
+        // dd($request);
 
-        return view('schedules.index', [
+        if ($request->class_id) {
+
+        } else {
+            $request->class_id = 1;
+        }
+        if ($request->grade) {
+            foreach ($request->grade as $idd => $grade) {
+                foreach ($grade as $id => $g) {
+                    $sdfsdf = SchoolClass::where('school_id', Auth::guard('school')->user()->id)->where('grade_id', $idd)->where('classroom_id', $id)->get();
+                    if (count($sdfsdf) > 0) {
+
+                        SchoolClass::where('school_id', Auth::guard('school')->user()->id)->where('grade_id', $idd)->where('classroom_id', $id)->delete();
+                        SchoolClass::create([
+                            'school_id' => Auth::guard('school')->user()->id,
+                            'grade_id' => $idd,
+                            'classroom_id' => $id,
+                            'number' => $g,
+                            'name' => '',
+                        ]);
+                    } else {
+                        SchoolClass::create([
+                            'school_id' => Auth::guard('school')->user()->id,
+                            'grade_id' => $idd,
+                            'classroom_id' => $id,
+                            'number' => $g,
+                            'name' => '',
+                        ]);
+                    }
+
+                }
+
+            }
+
+        }
+        if ($request->col) {
+            foreach ($request->col as $idd => $col) {
+                foreach ($col as $id => $g) {
+                    if(count(Schedule::where('school_id', Auth::guard('school')->user()->id)->where('row_id',  $id)->where('class_id',  $idd)->where('grade_id', $request->grade_id)->where('classroom_id', $request->classroom_id)->get() ) > 0){
+                        Schedule::where('school_id', Auth::guard('school')->user()->id)->where('row_id', $id)->where('class_id',    $idd)->where('grade_id', $request->grade_id)->where('classroom_id', $request->classroom_id)->update([
+                            'school_id' => Auth::guard('school')->user()->id,
+                            'grade_id' => $request->grade_id,
+                            'classroom_id' => $request->classroom_id,
+                            'class_id' => $idd,
+                            'row_id' => $id,
+                            'teacher_id' => $g,
+                            'classes_per_week' => '',
+                            'subject_id' => ' ',
+    
+                        ]);
+    
+                    }else{
+                        Schedule::create([
+                            'school_id' => Auth::guard('school')->user()->id,
+                            'grade_id' => $request->grade_id,
+                            'classroom_id' => $request->classroom_id,
+                            'class_id' => $idd,
+                            'row_id' => $id,
+                            'teacher_id' => $g,
+                            'classes_per_week' => '',
+                            'subject_id' => ' ',
+                        ]);
+    
+                    }
+
+                }
+
+            }
+
+        }
+         return view('schedules.' . $request->class_id, [
+            'class_id' => $request->class_id + 1,
             'schools' => School::all(),
             'grades' => Grade::all(),
-            'classrooms' => Classroom::all(),
-            'teachers' => Teacher::all(),
+            'schedules' => Schedule::where('school_id', Auth::guard('school')->user()->id)->get(),
+            'teachers' => Teacher::where('school_id', Auth::guard('school')->user()->id)->get(),
             'subjects' => Subject::all(),
-            'school_id' => $request->get('school_id'),
-            'grade_id' => $request->get('grade_id'),
-            'class_id' => $request->get('class_id'),
-            'school_classes' => $school_classes,
-            'classroom' => $classroom,
-            'grade' => $grade,
-            'school' => $school,
+            'school_classes' => SchoolClass::get()->where('school_id', Auth::guard('school')->user()->id),
+            'classrooms' => Classroom::all(),
         ]);
     }
+
     public function show(Request $request)
     {
         $school_id = $request->query('s');
@@ -246,7 +310,7 @@ class ScheduleController extends Controller
         $school = School::find($schedule->school_id);
         $school_classes = SchoolClass::get()->where('school_id', $schedule->school_id);
 
-        $schedules = Schedule::get()->where('school_id', $schedule->school_id)->where('classroom_id', $schedule->classroom_id)->where('grade_id', $schedule->grade_id) ;
+        $schedules = Schedule::get()->where('school_id', $schedule->school_id)->where('classroom_id', $schedule->classroom_id)->where('grade_id', $schedule->grade_id);
 
         return view('schedules.edit', [
             'schools' => School::all(),
@@ -274,12 +338,12 @@ class ScheduleController extends Controller
             'classroom' => 'required',
         ]);
 
-           // Clear existing schedule first (optional)
+        // Clear existing schedule first (optional)
         Schedule::where('school_id', $request->school_id)
             ->where('grade_id', $request->grade)
             ->where('classroom_id', $request->classroom)
             ->delete();
-            $schedules = [];
+        $schedules = [];
         foreach ($request->row as $id => $row) {
             $a = ['subject', 'classes_per_week'];
             foreach ($row as $key => $value) {
@@ -428,6 +492,7 @@ class ScheduleController extends Controller
 
         return $table;
     }
+
     public function getClassesByGrade($gradeId, Request $request)
     {
         $schoolId = $request->query('school_id');

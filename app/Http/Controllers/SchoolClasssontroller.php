@@ -2,20 +2,55 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SchoolClass;
-use App\Models\Grade;
 use App\Models\Classroom;
+use App\Models\Grade;
+use App\Models\School;
+use App\Models\SchoolClass;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class SchoolClasssontroller extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        // Fetch classes related to the authenticated school
-        $classes = SchoolClass::where('school_id', Auth::guard('school')->user()->id)->get();
+        if (Auth::guard('school')->check()) {
+            if ($request->row) {
+                foreach ($request->row as $id => $row) {
+                    if (Teacher::where('school_id', Auth::guard('school')->user()->id)->where('row_id', $id)) {
+                        Teacher::where('school_id', Auth::guard('school')->user()->id)->where('row_id', $id)->delete();
+                        Teacher::create([
+                            'school_id' => Auth::guard('school')->user()->id,
+                            'row_id' => $id,
+                            'name' => $row['name'],
+                            'number_of_classes' => $row['subject'],
+                            'no7' => $row['no7'],
+                        ]);
 
-        return view('school_classes.index', compact('classes'));
+                    } else {
+                        Teacher::create([
+                            'school_id' => Auth::guard('school')->user()->id,
+                            'row_id' => $id,
+                            'number_of_classes' => $row['subject'],
+                            'no7' => $row['no7'],
+                            'name' => $row['name'],
+
+                        ]);
+                    }
+
+                }
+            }
+
+            // Fetch classes related to the authenticated school
+
+        }
+        return view('school_classes.index', [
+            'schools' => School::all(),
+            'grades' => Grade::all(),
+            'classrooms' => Classroom::all(),
+            'teachers' => Teacher::all(),
+            'school_classes' => SchoolClass::all(),
+        ]);
     }
 
     public function create()
@@ -31,7 +66,7 @@ class SchoolClasssontroller extends Controller
             'class_name' => 'required|string|max:255',
             'grade_id' => 'required|exists:grades,id',
             'classroom_id' => 'required|exists:classrooms,id',
-         ]);
+        ]);
 
         SchoolClass::create([
             'name' => $request->class_name,

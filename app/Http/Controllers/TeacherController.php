@@ -2,21 +2,35 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Teacher;
 use App\Models\School;
 use App\Models\Subject;
+use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TeacherController extends Controller
 {
 
-
-    public function index()
+    public function index(Request $request)
     {
-        // Check the guard being used
+         // Check the guard being used
         if (Auth::guard('school')->check()) {
+            $request->validate([
+                'area' => 'required',
+                'number_of_classes' => 'required',
+                'manager_name' => 'required',
+                'phone' => 'required',
+
+            ]);
+            School::where('id', Auth::guard('school')->user()->id)->update([
+                'area' => $request->area,
+                'number_of_classes' => $request->number_of_classes,
+                'manager_name' => $request->manager_name,
+                'phone' => $request->phone,
+            ]);
+
             $teachers = Teacher::where('school_id', Auth::guard('school')->user()->id)->get();
+
         } else {
             // For 'web' guard, show all teachers
             $teachers = Teacher::all();
@@ -33,7 +47,7 @@ class TeacherController extends Controller
         if (Auth::guard('school')->check()) {
             $schools = School::where('id', Auth::guard('school')->user()->id)->get();
         } else {
-            $schools = School::all();  // Allow selecting school when using the 'web' guard
+            $schools = School::all(); // Allow selecting school when using the 'web' guard
         }
 
         return view('teachers.add', compact('subjects', 'schools'));
@@ -55,7 +69,7 @@ class TeacherController extends Controller
             'email' => $request->email,
             'phone' => $request->phone,
             'subject_id' => $request->subject_id,
-            'specialization' => $request->no7 ,
+            'specialization' => $request->no7,
             'school_id' => Auth::guard('school')->check() ? Auth::guard('school')->id() : $request->school_id,
         ]);
 
@@ -86,18 +100,17 @@ class TeacherController extends Controller
             'no7' => 'required',
             'school_id' => Auth::guard('school')->check() ? '' : 'required|exists:schools,id',
         ]);
-         $teacher->update([
+        $teacher->update([
             'name' => $request->name,
             'email' => $request->email,
             'phone' => $request->phone,
             'subject_id' => $request->subject_id,
-            'specialization' => $request->no7      ,
+            'specialization' => $request->no7,
             'school_id' => Auth::guard('school')->check() ? Auth::guard('school')->id() : $request->school_id,
         ]);
 
         return redirect()->route('teachers.index')->with('success', 'Teacher updated successfully.');
     }
-
 
     public function destroy(Teacher $teacher)
     {

@@ -13,7 +13,9 @@ class SchoolClass extends Model
         'school_id',
         'grade_id',
         'classroom_id',
+        'number',
         'name',
+       
     ];
 
     public function school()
