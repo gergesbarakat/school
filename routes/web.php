@@ -8,9 +8,11 @@ use App\Http\Controllers\SchoolClasssontroller;
 use App\Http\Controllers\SchoolController;
 use App\Http\Controllers\SchoolProfileEdit;
 use App\Http\Controllers\TeacherController;
+use App\Http\Controllers\ExportsController;
 use App\Models\School;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\SubjectController;
+use Illuminate\Support\Facades\Auth;
 
 Route::middleware('auth:web')->group(function () {
     Route::get('/dashbaord', function () {
@@ -27,7 +29,8 @@ Route::middleware('auth:web')->group(function () {
     Route::resource('classrooms', ClassroomController::class);
 
 });
-
+Route::get('export/', [ ExportsController::class, 'export' ])->name('export');
+Route::get('import/', [ ExportsController::class, 'import' ])->name('import');
 Route::prefix('school')->name('school.')->group(function () {
 
     Route::middleware('auth:school')->group(function () {
@@ -48,6 +51,7 @@ Route::prefix('school')->name('school.')->group(function () {
 Route::resource('teachers', TeacherController::class);
 
 Route::middleware('multiauth')->group(function () {
+
 
     Route::get('/', function () {
         if (Auth::guard('web')->check()) {
@@ -87,6 +91,7 @@ Route::middleware('multiauth')->group(function () {
 
     Route::get('/get-schedule', [ScheduleController::class, 'getSchedule']);
     Route::get('/schedules/fetch', [ScheduleController::class, 'fetch'])->name('schedules.fetch');
+    Route::get('/export/schedules', [ExportsController::class, 'export'])->name('export.schedules');
 
 });
 

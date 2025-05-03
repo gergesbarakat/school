@@ -10,10 +10,11 @@
             <div class="mx-auto">
                 <div class = "p-4  mb-4 text-right text-xl text-bold      text-red-700 bg-white border-3xl border border-green-500   dark:bg-red-300     dark:text-red-800"
                     role="alert">
-                    اسناد مواد الصف الأول الابـتدائي
-                </div>
-                <div class="bg-white p-6 rounded shadow-md">
+                    اسناد مواد الصف الأول ثانوي </div>
+                <div class="bg-white p-6 rounded  gap-3 flex flex-row-reverse flex-wrap">
                     <input type="hidden" name="class_id" value="11">
+                    <input type="hidden" name="grade_class" value="أول ثانوي">
+
                     <style>
                         .main-table {
                             width: 100%;
@@ -120,691 +121,76 @@
                             /* محاذاة الجداول إلى بداية الحاوية (اليمين في هذه الحالة) */
                         }
                     </style>
-                    <div class="table-section">
-                        <table class="main-table">
-                            <thead class="bg-red-300    ">
-                                <tr class="colored-header-row">
+                    @for ($c = 1; $c < 10; $c++)
+                        <div class="table-section ">
+                            <table class="main-table">
+                                <thead class="bg-red-300    ">
+                                    <tr class="colored-header-row">
+
+                                        <td class="bg-red-300" colspan="1">1/{{ $c }}</td>
+                                        <td colspan="3">الفصل</td>
+
+                                    </tr>
+                                    <tr class="colored-header-row">
+
+                                        <td colspan="1">اسم المعلمة</td>
+                                        <td colspan="1">الحصص</td>
+                                        <td colspan="1">المواد</td>
+
+                                        <td class="bg-red-300" colspan="1">عدد المواد</td>
+
+                                    </tr>
+                                </thead class="bg-red-300   ">
+                                <tbody>
+                                    @for ($i = 1; $i < 8; $i++)
+                                        <tr>
+                                            <?php $classroom = $classrooms->where('name', 'أول ثانوي')->first();
+                                            
+                                            $scc = $schedules
+                                                ->where('school_id', Auth::guard('school')->user()->id)
+                                                ->where('row_id', $i)
+                                                ->where('class_id', $c)
+                                                ->where('grade_id', $classroom->grade_id)
+                                                ->where('classroom_id', $classroom->id)
+                                                ->first();
+                                            if (isset($scc) && $scc != null) {
+                                                $teeee = $scc->teacher_id;
+                                                $teec = $scc->subject_id;
+                                            } else {
+                                                $teeee = ' ';
+                                                $teec = '  ';
+                                            }
+                                            ?>
+                                            <td><select
+                                                    name="class[{{ $c }}][{{ $i }}][teacher_id]"
+                                                    class="p-2">
+                                                    <option></option>
+                                                    @foreach ($teachers as $teacher)
+                                                        <option value="{{ $teacher->name }}"
+                                                            {{ $teeee == $teacher->name ? 'selected' : '' }}>
+                                                            {{ $teacher->name }}
+                                                        </option>
+                                                    @endforeach
+
+                                                </select></td>
+                                            <td class="bg-red-300">5</td>
+                                            <td><input
+                                                    name='class[{{ $c }}][{{ $i }}][subject_id]'
+                                                    type="text" value="{{ $teec }}">
+                                            </td>
+                                            <td class="bg-red-300" class="bg-red-300">{{ $i }}</td>
+
+                                        </tr>
+                                    @endfor
+                                    <tr class="total-hours-row">
+                                        <td colspan="4">مجموع الحصص 32</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    @endfor
 
-                                    <td  class="bg-red-300" colspan="1">1/1</td>
-                                    <td colspan="3">الفصل</td>
-
-                                </tr>
-                                <tr class="colored-header-row">
-
-                                    <td colspan="1">اسم المعلمة</td>
-                                    <td colspan="1">الحصص</td>
-                                    <td colspan="1">المواد</td>
-
-                                    <td  class="bg-red-300" colspan="1">عدد المواد</td>
-
-                                </tr>
-                            </thead class="bg-red-300   ">
-                            <tbody>
-                                <tr>
-
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300" class="bg-red-300">1</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">2</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">3</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">4</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">6</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">7</td>
-                                </tr>
-
-                                <tr class="total-hours-row">
-                                    <td colspan="4">مجموع الحصص 32</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="table-section">
-                        <table class="main-table">
-                            <thead class="bg-red-300    ">
-                                <tr class="colored-header-row">
-
-                                    <td  class="bg-red-300" colspan="1">2/1</td>
-                                    <td colspan="3">الفصل</td>
-
-                                </tr>
-                                <tr class="colored-header-row">
-
-                                    <td colspan="1">اسم المعلمة</td>
-                                    <td colspan="1">الحصص</td>
-                                    <td colspan="1">المواد</td>
-
-                                    <td  class="bg-red-300" colspan="1">عدد المواد</td>
-
-                                </tr>
-                            </thead class="bg-red-300   ">
-                            <tbody>
-                                <tr>
-
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300" class="bg-red-300">1</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">2</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">3</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">4</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">6</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">7</td>
-                                </tr>
-
-                                <tr class="total-hours-row">
-                                    <td colspan="4">مجموع الحصص 32</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="table-section">
-                        <table class="main-table">
-                            <thead class="bg-red-300    ">
-                                <tr class="colored-header-row">
-
-                                    <td  class="bg-red-300" colspan="1">3/1</td>
-                                    <td colspan="3">الفصل</td>
-
-                                </tr>
-                                <tr class="colored-header-row">
-
-                                    <td colspan="1">اسم المعلمة</td>
-                                    <td colspan="1">الحصص</td>
-                                    <td colspan="1">المواد</td>
-
-                                    <td  class="bg-red-300" colspan="1">عدد المواد</td>
-
-                                </tr>
-                            </thead class="bg-red-300   ">
-                            <tbody>
-                                <tr>
-
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300" class="bg-red-300">1</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">2</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">3</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">4</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">6</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">7</td>
-                                </tr>
-
-                                <tr class="total-hours-row">
-                                    <td colspan="4">مجموع الحصص 32</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="table-section">
-                        <table class="main-table">
-                            <thead class="bg-red-300    ">
-                                <tr class="colored-header-row">
-
-                                    <td  class="bg-red-300" colspan="1">4/1</td>
-                                    <td colspan="3">الفصل</td>
-
-                                </tr>
-                                <tr class="colored-header-row">
-
-                                    <td colspan="1">اسم المعلمة</td>
-                                    <td colspan="1">الحصص</td>
-                                    <td colspan="1">المواد</td>
-
-                                    <td  class="bg-red-300" colspan="1">عدد المواد</td>
-
-                                </tr>
-                            </thead class="bg-red-300   ">
-                            <tbody>
-                                <tr>
-
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300" class="bg-red-300">1</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">2</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">3</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">4</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">6</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">7</td>
-                                </tr>
-
-                                <tr class="total-hours-row">
-                                    <td colspan="4">مجموع الحصص 32</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="table-section">
-                        <table class="main-table">
-                            <thead class="bg-red-300    ">
-                                <tr class="colored-header-row">
-
-                                    <td  class="bg-red-300" colspan="1">5/1</td>
-                                    <td colspan="3">الفصل</td>
-
-                                </tr>
-                                <tr class="colored-header-row">
-
-                                    <td colspan="1">اسم المعلمة</td>
-                                    <td colspan="1">الحصص</td>
-                                    <td colspan="1">المواد</td>
-
-                                    <td  class="bg-red-300" colspan="1">عدد المواد</td>
-
-                                </tr>
-                            </thead class="bg-red-300   ">
-                            <tbody>
-                                <tr>
-
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300" class="bg-red-300">1</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">2</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">3</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">4</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">6</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">7</td>
-                                </tr>
-
-                                <tr class="total-hours-row">
-                                    <td colspan="4">مجموع الحصص 32</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="table-section">
-                        <table class="main-table">
-                            <thead class="bg-red-300    ">
-                                <tr class="colored-header-row">
-
-                                    <td  class="bg-red-300" colspan="1">6/1</td>
-                                    <td colspan="3">الفصل</td>
-
-                                </tr>
-                                <tr class="colored-header-row">
-
-                                    <td colspan="1">اسم المعلمة</td>
-                                    <td colspan="1">الحصص</td>
-                                    <td colspan="1">المواد</td>
-
-                                    <td  class="bg-red-300" colspan="1">عدد المواد</td>
-
-                                </tr>
-                            </thead class="bg-red-300   ">
-                            <tbody>
-                                <tr>
-
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300" class="bg-red-300">1</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">2</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">3</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">4</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">6</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">7</td>
-                                </tr>
-
-                                <tr class="total-hours-row">
-                                    <td colspan="4">مجموع الحصص 32</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="table-section">
-                        <table class="main-table">
-                            <thead class="bg-red-300    ">
-                                <tr class="colored-header-row">
-
-                                    <td  class="bg-red-300" colspan="1">7/1</td>
-                                    <td colspan="3">الفصل</td>
-
-                                </tr>
-                                <tr class="colored-header-row">
-
-                                    <td colspan="1">اسم المعلمة</td>
-                                    <td colspan="1">الحصص</td>
-                                    <td colspan="1">المواد</td>
-
-                                    <td  class="bg-red-300" colspan="1">عدد المواد</td>
-
-                                </tr>
-                            </thead class="bg-red-300   ">
-                            <tbody>
-                                <tr>
-
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300" class="bg-red-300">1</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">2</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">3</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">4</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">6</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">7</td>
-                                </tr>
-
-                                <tr class="total-hours-row">
-                                    <td colspan="4">مجموع الحصص 32</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="table-section">
-                        <table class="main-table">
-                            <thead class="bg-red-300    ">
-                                <tr class="colored-header-row">
-
-                                    <td  class="bg-red-300" colspan="1">8/1</td>
-                                    <td colspan="3">الفصل</td>
-
-                                </tr>
-                                <tr class="colored-header-row">
-
-                                    <td colspan="1">اسم المعلمة</td>
-                                    <td colspan="1">الحصص</td>
-                                    <td colspan="1">المواد</td>
-
-                                    <td  class="bg-red-300" colspan="1">عدد المواد</td>
-
-                                </tr>
-                            </thead class="bg-red-300   ">
-                            <tbody>
-                                <tr>
-
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300" class="bg-red-300">1</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">2</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">3</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">4</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">6</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">7</td>
-                                </tr>
-
-                                <tr class="total-hours-row">
-                                    <td colspan="4">مجموع الحصص 32</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <div class="table-section">
-                        <table class="main-table">
-                            <thead class="bg-red-300    ">
-                                <tr class="colored-header-row">
-
-                                    <td  class="bg-red-300" colspan="1">9/1</td>
-                                    <td colspan="3">الفصل</td>
-
-                                </tr>
-                                <tr class="colored-header-row">
-
-                                    <td colspan="1">اسم المعلمة</td>
-                                    <td colspan="1">الحصص</td>
-                                    <td colspan="1">المواد</td>
-
-                                    <td  class="bg-red-300" colspan="1">عدد المواد</td>
-
-                                </tr>
-                            </thead class="bg-red-300   ">
-                            <tbody>
-                                <tr>
-
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300" class="bg-red-300">1</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">2</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">3</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td  class="bg-red-300">4</td>
-
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">6</td>
-                                </tr>
-                                <tr>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">5</td>
-                                    <td><input type="text" value=""></td>
-                                    <td class="bg-red-300">7</td>
-                                </tr>
-
-                                <tr class="total-hours-row">
-                                    <td colspan="4">مجموع الحصص 32</td>
-                                </tr>
-
-                            </tbody>
-                        </table>
-
-
-                    </div>
                     <div class="w-full mt-6 p-4 flex gap-2">
                         <div class=" flex w-1/2   justify-start">
                             <a href="{{ url()->previous() }}"

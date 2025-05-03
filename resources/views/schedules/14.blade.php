@@ -10,10 +10,10 @@
             <div class="mx-auto">
                 <div class = "p-4  mb-4 text-right text-xl text-bold      text-red-700 bg-white border-3xl border border-green-500   dark:bg-red-300     dark:text-red-800"
                     role="alert">
-                    اسناد مواد الصف الثاني ثانوي علمي </div>
+                    اسناد مواد الصف الثالث ثانوي أدبي </div>
                 <div class="bg-white p-6 rounded  gap-3 flex flex-row-reverse flex-wrap">
-                    <input type="hidden" name="class_id" value="12">
-                    <input type="hidden" name="grade_class" value="ثاني ثانوي علمي">
+                    <input type="hidden" name="class_id" value="15">
+                    <input type="hidden" name="grade_class" value="ثالث ثانوي أدبي">
 
                     <style>
                         .main-table {
@@ -121,7 +121,7 @@
                             /* محاذاة الجداول إلى بداية الحاوية (اليمين في هذه الحالة) */
                         }
                     </style>
-                    @for ($c = 1; $c < 10; $c++)
+                     @for ($c = 1; $c < 10; $c++)
                         <div class="table-section ">
                             <table class="main-table">
                                 <thead class="bg-red-300    ">
@@ -144,7 +144,7 @@
                                 <tbody>
                                     @for ($i = 1; $i < 8; $i++)
                                         <tr>
-                                            <?php $classroom = $classrooms->where('name', 'ثاني ثانوي علمي')->first();
+                                            <?php $classroom = $classrooms->where('name', 'ثالث ثانوي أدبي')->first();
                                             
                                             $scc = $schedules
                                                 ->where('school_id', Auth::guard('school')->user()->id)

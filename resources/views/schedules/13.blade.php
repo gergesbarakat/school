@@ -8,314 +8,207 @@
             class="content ml-12 transform ease-in-out duration-500 px-2 md:px-5 pb-4">
             @csrf
             <div class="mx-auto">
-                <div class = "p-4  mb-4 text-right text-xl text-bold      text-red-700 bg-white border-3xl border border-green-500   dark:bg-red-200 dark:text-red-800"
+                <div class = "p-4  mb-4 text-right text-xl text-bold      text-red-700 bg-white border-3xl border border-green-500   dark:bg-red-300     dark:text-red-800"
                     role="alert">
-                    اسناد مواد الصف الأول الابـتدائي
-                </div>
-                 <div class="bg-white p-6 rounded shadow-md">
-                    <input type="hidden" name="class_id" value="2">
+                    اسناد مواد الصف الثالث ثانوي علمي </div>
+                <div class="bg-white p-6 rounded  gap-3 flex flex-row-reverse flex-wrap">
+                    <input type="hidden" name="class_id" value="14">
+                    <input type="hidden" name="grade_class" value="ثالث ثانوي علمي">
+
                     <style>
-                        table {
-                            border-collapse: collapse;
+                        .main-table {
                             width: 100%;
-                            direction: rtl;
+                            border-collapse: collapse;
+                            margin-bottom: 20px;
+                        }
+
+                        .main-table td,
+                        .main-table th {
+                            border: 1px solid #ddd;
                             text-align: center;
                         }
 
-                        th,
-                        td {
-                            border: 2px solid black;
-                            padding: 8px;
-                        }
-
-                        thead th {
-                            background-color: #f9d5d5;
-                        }
-
-                        .total-row {
+                        .main-table thead class="bg-red-300 " td {
                             font-weight: bold;
-                            color: red;
+                            background-color: #f0f0f0;
+                        }
+
+                        .class-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            margin-top: 10px;
+                        }
+
+                        .class-table td,
+                        .class-table th {
+                            border: 1px solid #ddd;
+                            padding: 8px;
+                            text-align: center;
+                        }
+
+                        .class-table thead class="bg-red-300    " td {
+                            font-weight: bold;
+                            background-color: #f0f0f0;
+                        }
+
+                        .class-name-row td {
+                            font-weight: bold;
+                        }
+
+                        .total-hours-row td {
+                            font-weight: bold;
+                        }
+
+                        @media (max-width: 768px) {
+                            .main-table {
+                                display: block;
+                                overflow-x: auto;
+                            }
+                        }
+
+                        /* Add spacing between main tables */
+                        .main-table {
+                            margin-bottom: 20px;
+                            /* Increased spacing */
+                        }
+
+                        .class-table {}
+
+                        /* Add spacing and visual separation */
+                        .table-section {
+                            margin-bottom: 30px;
+                            /* Add space between sections */
+                            border: 1px solid #ddd;
+                            /* Add a border */
+                            border-radius: 5px;
+                            /* Round the corners */
+                            display: inline-block;
+                            width: 32%;
+                            vertical-align: top;
+                            box-sizing: border-box;
+                            /* Include padding and border in element's total width and height */
+                        }
+
+                        .main-table {
+                            border: none;
+                        }
+
+                        .top-header td {
+                            font-size: 14px;
                         }
 
                         input {
-                            border: none;
-                            text-align: center;
                             width: 100%;
+                            /* Make input fields fill their cells */
+                            padding: 5px;
+                            box-sizing: border-box;
+                            /* Include padding and border in element's total width and height */
+                            border: none;
+                            /* Remove the default border */
+                            text-align: center;
+                            /* Center the input text */
+                        }
+
+                        .colored-header-row {}
+
+                        .tables-container {
+                            display: flex;
+                            flex-direction: row-reverse;
+                            /* ترتيب الجداول من اليمين إلى اليسار */
+                            flex-wrap: wrap;
+                            /* السماح للجداول بالانتقال إلى السطر التالي في حالة عدم توفر مساحة كافية */
+                            justify-content: flex-start;
+                            /* محاذاة الجداول إلى بداية الحاوية (اليمين في هذه الحالة) */
                         }
                     </style>
-                    <table>
-                         
-                        <thead>
-                            <tr>
+                     @for ($c = 1; $c < 10; $c++)
+                        <div class="table-section ">
+                            <table class="main-table">
+                                <thead class="bg-red-300    ">
+                                    <tr class="colored-header-row">
 
-                                <th rowspan="2">عدد المواد</th>
-                                <th rowspan="2">المواد</th>
-                                <th rowspan="2">الحصص</th>
-                                <th colspan="7">← الفصل</th>
+                                        <td class="bg-red-300" colspan="1">1/{{ $c }}</td>
+                                        <td colspan="3">الفصل</td>
 
-                            </tr>
-                            <tr>
+                                    </tr>
+                                    <tr class="colored-header-row">
 
-                                @php $grade = $grades->where('name', 'المرحلة الابتدائية')    @endphp
-                                @php $class = $classrooms->where('name', 'اول ابتدائي')    @endphp
-                                <input type="hidden" name="grade_id" value="{{ $grade->first()->id }}">
-                                <input type="hidden" name="classroom_id" value="{{ $class->first()->id }}">
+                                        <td colspan="1">اسم المعلمة</td>
+                                        <td colspan="1">الحصص</td>
+                                        <td colspan="1">المواد</td>
 
-                                @php $school_classess  = $school_classes->where('grade_id',$grade->first()->id)->where('classroom_id',$class->first()->id)  @endphp
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    {!! $i == 1 ? '  <th>فصل أول ( أ )<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 2 ? '  <th>فصل أول ( ب )<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 3 ? '  <th>فصل أول ( ج )<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 4 ? '  <th>فصل أول ( د )<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 5 ? '  <th>فصل أول ( ه )<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 6 ? '  <th>فصل أول ( و )<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 7 ? '  <th>فصل أول ( ز )<br> مثلاً نوره خالد  ' : '' !!}
-                                @endfor
+                                        <td class="bg-red-300" colspan="1">عدد المواد</td>
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>د إسلامية</td>
-                                <td>5</td>
-                                 @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    <?php
-                                    $a = $schedules
-                                        ->where('row_id', 1)
-                                        ->where('class_id', $i)
-                                        ->where('grade_id', $grade->first()->id)
-                                        ->where('classroom_id', $class->first()->id)
-                                        ->first();
-                                    ?>
-                                    <td><select name="col[{{ $i }}][1]" class="p-2">
-
-                                            <option></option>
-
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $a != null && $a->teacher_id != null && $a->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>لغتي</td>
-                                <td>8</td>
-
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    <?php
-                                    $b = $schedules
-                                        ->where('row_id', 2)
-                                        ->where('class_id', $i)
-                                        ->where('grade_id', $grade->first()->id)
-                                        ->where('classroom_id', $class->first()->id)
-                                        ->first();
-                                    ?>
-                                    <td><select name="col[{{ $i }}][2]" class="p-2">
-                                            <option></option>
-
-
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $b != null && $b->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
-                                @endfor
-
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>رياضيات</td>
-                                <td>5</td>
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                <?php
-                                    $c = $schedules
-                                        ->where('row_id', 1)
-                                        ->where('class_id', $i)
-                                        ->where('grade_id', $grade->first()->id)
-                                        ->where('classroom_id', $class->first()->id)
-                                        ->first();
-                                     ?>
-                                    <td><select name="col[{{ $i }}][3]" class="p-2">
-                                            <option></option>
-
- 
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $c != null && $c->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>علوم</td>
-                                <td>3</td>
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    <?php
-                                    $d = $schedules
-                                        ->where('row_id', 4)
-                                        ->where('class_id', $i)
-                                        ->where('grade_id', $grade->first()->id)
-                                        ->where('classroom_id', $class->first()->id)
-                                        ->first();
-                                    ?>
-                                    <td><select name="col[{{ $i }}][4]" class="p-2">
-                                            <option></option>
-
-
-
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $d != null && $d->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>E</td>
-                                <td>3</td>
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    <?php
-                                    $e = $schedules
-                                        ->where('row_id', 5)
-                                        ->where('class_id', $i)
-                                        ->where('grade_id', $grade->first()->id)
-                                        ->where('classroom_id', $class->first()->id)
-                                        ->first();
-                                    ?>
-                                    <td><select name="col[{{ $i }}][5]" class="p-2">
-                                            <option></option>
-
-
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $e != null && $e->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>فنية</td>
-                                <td>2</td>
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    <?php
-                                    $f = $schedules
-                                        ->where('row_id', 6)
-                                        ->where('class_id', $i)
-                                        ->where('grade_id', $grade->first()->id)
-                                        ->where('classroom_id', $class->first()->id)
-                                        ->first();
-                                    ?>
-                                    <td><select name="col[{{ $i }}][6]" class="p-2">
-                                            <option></option>
-
-
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $f != null && $f->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td>بدنية</td>
-                                <td>3</td>
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    <?php
-                                    $e = $schedules
-                                        ->where('row_id', 7)
-                                        ->where('class_id', $i)
-                                        ->where('grade_id', $grade->first()->id)
-                                        ->where('classroom_id', $class->first()->id)
-                                        ->first();
-                                    ?>
-                                    <td><select name="col[{{ $i }}][7]" class="p-2">
-                                            <option></option>
-
+                                    </tr>
+                                </thead class="bg-red-300   ">
+                                <tbody>
+                                    @for ($i = 1; $i < 8; $i++)
+                                        <tr>
+                                            <?php $classroom = $classrooms->where('name', 'ثالث ثانوي علمي')->first();
                                             
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $e != null && $e->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <td>8</td>
-                                <td>مهارات</td>
-                                <td>1</td>
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    <?php
-                                    $g = $schedules
-                                        ->where('row_id', 8)
-                                        ->where('class_id', $i)
-                                        ->where('grade_id', $grade->first()->id)
-                                        ->where('classroom_id', $class->first()->id)
-                                        ->first();
-                                    ?>
-                                    <td><select name="col[{{ $i }}][8]" class="p-2">
-                                            <option></option>
+                                            $scc = $schedules
+                                                ->where('school_id', Auth::guard('school')->user()->id)
+                                                ->where('row_id', $i)
+                                                ->where('class_id', $c)
+                                                ->where('grade_id', $classroom->grade_id)
+                                                ->where('classroom_id', $classroom->id)
+                                                ->first();
+                                                if (isset($scc) && $scc != null) {
+                                                $teeee = $scc->teacher_id;
+                                                $teec = $scc->subject_id;
+                                            } else {
+                                                $teeee = ' ';
+                                                $teec = '  ';
+                                            }
+                                            
+                                            ?>
+                                            <td><select
+                                                    name="class[{{ $c }}][{{ $i }}][teacher_id]"
+                                                    class="p-2">
+                                                    <option></option>
+                                                    @foreach ($teachers as $teacher)
+                                                        <option value="{{ $teacher->name }}"
+                                                            {{ $teeee == $teacher->name ? 'selected' : '' }}>
+                                                            {{ $teacher->name }}
+                                                        </option>
+                                                    @endforeach
+
+                                                </select></td>
+                                            <td class="bg-red-300">5</td>
+                                            <td><input
+                                                    name='class[{{ $c }}][{{ $i }}][subject_id]'
+                                                    type="text" value="{{ $teec }}">
+                                            </td>
+                                            <td class="bg-red-300" class="bg-red-300">{{ $i }}</td>
+
+                                        </tr>
+                                    @endfor
+                                    <tr class="total-hours-row">
+                                        <td colspan="4">مجموع الحصص 32</td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    @endfor
+
+                    <div class="w-full mt-6 p-4 flex gap-2">
+                        <div class=" flex w-1/2   justify-start">
+                            <a href="{{ url()->previous() }}"
+                                class="bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600">
+                                السابق
+                            </a>
+                        </div>
+                        <div class="flex  w-1/2        justify-start">
+                            <input type="submit" value='التالي '
+                                class='bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600'
+                                name="" id="">
+                        </div>
 
 
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $g != null && $g->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
-                                @endfor
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr class="total-row">
-                                <td colspan="3">مجموع الحصص 30</td>
-                                <td colspan="7"></td>
-                            </tr>
-                        </tfoot>
-                    </table>
 
+                    </div>
                 </div>
-
-            </div>
-            <div class="w-full mt-6 p-4 flex gap-2">
-                <div class=" flex w-1/2   justify-start">
-                    <a href="{{ url()->previous() }}"
-                        class="bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600">
-                        السابق
-                    </a>
-                </div>
-                <div class="flex  w-1/2        justify-start">
-                    <input type="submit" value='التالي '
-                        class='bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600'
-                        name="" id="">
-                </div>
-
-
-
-            </div>
-            </div>
 
     </body>
 

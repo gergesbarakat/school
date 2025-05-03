@@ -121,6 +121,9 @@
 
         </form>
 
-
+        <a target="_blank" href="{{ route('export.schedules', ['school_id' => Auth::guard('school')->user()->id]) }}"
+            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+             تصدير الجدول
+         </a>
 
 </x-app-layout>

@@ -1,19 +1,3 @@
-<x-app-layout>
-
-    <body class="body bg-white dark:bg-[#0F172A]">
-        <x-side-bar></x-side-bar>
-
-        <!-- CONTENT -->
-        <form method="GET" action="{{ route('schedules.index') }}"
-            class="content ml-12 transform ease-in-out duration-500 px-2 md:px-5 pb-4">
-            @csrf
-            <div class="mx-auto">
-                <div class = "p-4  mb-4 text-right text-xl text-bold      text-red-700 bg-white border-3xl border border-green-500   dark:bg-red-200 dark:text-red-800"
-                    role="alert">
-                    اسناد مواد الصف السادس الابـتدائي
-                </div>
-                 <div class="bg-white p-6 rounded shadow-md">
-                    <input type="hidden" name="class_id" value="7">
                     <style>
                         table {
                             border-collapse: collapse;
@@ -44,7 +28,7 @@
                         }
                     </style>
                     <table>
-                         
+
                         <thead>
                             <tr>
 
@@ -81,24 +65,15 @@
                                 <td>5</td>
                                  @for ($i = 1; $i <= $school_classess->first()->number; $i++)
                                     <?php
-                                    $a = $schedules
+                                    $c = $schedules
                                         ->where('row_id', 1)
                                         ->where('class_id', $i)
                                         ->where('grade_id', $grade->first()->id)
                                         ->where('classroom_id', $class->first()->id)
                                         ->first();
                                     ?>
-                                    <td><select name="col[{{ $i }}][1]" class="p-2">
-
-                                            <option></option>
-
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $a != null && $a->teacher_id != null && $a->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
+                                    <td>
+                                        {{ $c->teacher_id }} </td>
                                 @endfor
                             </tr>
                             <tr>
@@ -108,24 +83,15 @@
 
                                 @for ($i = 1; $i <= $school_classess->first()->number; $i++)
                                     <?php
-                                    $b = $schedules
+                                    $c = $schedules
                                         ->where('row_id', 2)
                                         ->where('class_id', $i)
                                         ->where('grade_id', $grade->first()->id)
                                         ->where('classroom_id', $class->first()->id)
                                         ->first();
                                     ?>
-                                    <td><select name="col[{{ $i }}][2]" class="p-2">
-                                            <option></option>
-
-
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $b != null && $b->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
+                                    <td>
+                                        {{ $c->teacher_id }} </td>
                                 @endfor
 
                             </tr>
@@ -142,17 +108,8 @@
                                         ->where('classroom_id', $class->first()->id)
                                         ->first();
                                      ?>
-                                    <td><select name="col[{{ $i }}][3]" class="p-2">
-                                            <option></option>
-
- 
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $c != null && $c->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
+                                    <td>
+                                        {{ $c->teacher_id }} </td>
                                 @endfor
                             </tr>
                             <tr>
@@ -161,26 +118,16 @@
                                 <td>3</td>
                                 @for ($i = 1; $i <= $school_classess->first()->number; $i++)
                                     <?php
-                                    $d = $schedules
+                                    $c = $schedules
                                         ->where('row_id', 4)
                                         ->where('class_id', $i)
                                         ->where('grade_id', $grade->first()->id)
                                         ->where('classroom_id', $class->first()->id)
                                         ->first();
                                     ?>
-                                    <td><select name="col[{{ $i }}][4]" class="p-2">
-                                            <option></option>
-
-
-
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $d != null && $d->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
-                                @endfor
+<td>
+    {{ $c->teacher_id }} </td>
+    @endfor
                             </tr>
                             <tr>
                                 <td>5</td>
@@ -188,25 +135,15 @@
                                 <td>3</td>
                                 @for ($i = 1; $i <= $school_classess->first()->number; $i++)
                                     <?php
-                                    $e = $schedules
+                                    $c = $schedules
                                         ->where('row_id', 5)
                                         ->where('class_id', $i)
                                         ->where('grade_id', $grade->first()->id)
                                         ->where('classroom_id', $class->first()->id)
                                         ->first();
                                     ?>
-                                    <td><select name="col[{{ $i }}][5]" class="p-2">
-                                            <option></option>
-
-
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $e != null && $e->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
+                                   <td>
+                                        {{ $c->teacher_id }} </td>
                                 @endfor
                             </tr>
                             <tr>
@@ -215,24 +152,15 @@
                                 <td>2</td>
                                 @for ($i = 1; $i <= $school_classess->first()->number; $i++)
                                     <?php
-                                    $f = $schedules
+                                    $c = $schedules
                                         ->where('row_id', 6)
                                         ->where('class_id', $i)
                                         ->where('grade_id', $grade->first()->id)
                                         ->where('classroom_id', $class->first()->id)
                                         ->first();
                                     ?>
-                                    <td><select name="col[{{ $i }}][6]" class="p-2">
-                                            <option></option>
-
-
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $f != null && $f->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
+                                   <td>
+                                        {{ $c->teacher_id }} </td>
                                 @endfor
                             </tr>
                             <tr>
@@ -241,24 +169,15 @@
                                 <td>3</td>
                                 @for ($i = 1; $i <= $school_classess->first()->number; $i++)
                                     <?php
-                                    $e = $schedules
+                                    $c = $schedules
                                         ->where('row_id', 7)
                                         ->where('class_id', $i)
                                         ->where('grade_id', $grade->first()->id)
                                         ->where('classroom_id', $class->first()->id)
                                         ->first();
                                     ?>
-                                    <td><select name="col[{{ $i }}][7]" class="p-2">
-                                            <option></option>
-
-                                            
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $e != null && $e->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
+                                    <td>
+                                        {{ $c->teacher_id }} </td>
                                 @endfor
                             </tr>
                             <tr>
@@ -267,24 +186,15 @@
                                 <td>1</td>
                                 @for ($i = 1; $i <= $school_classess->first()->number; $i++)
                                     <?php
-                                    $g = $schedules
+                                    $c = $schedules
                                         ->where('row_id', 8)
                                         ->where('class_id', $i)
                                         ->where('grade_id', $grade->first()->id)
                                         ->where('classroom_id', $class->first()->id)
                                         ->first();
                                     ?>
-                                    <td><select name="col[{{ $i }}][8]" class="p-2">
-                                            <option></option>
-
-
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $g != null && $g->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
+                                    <td>
+                                        {{ $c->teacher_id }} </td>
                                 @endfor
                             </tr>
                         </tbody>
@@ -295,30 +205,3 @@
                             </tr>
                         </tfoot>
                     </table>
-
-                </div>
-
-            </div>
-            <div class="w-full mt-6 p-4 flex gap-2">
-                <div class=" flex w-1/2   justify-start">
-                    <a href="{{ url()->previous() }}"
-                        class="bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600">
-                        السابق
-                    </a>
-                </div>
-                <div class="flex  w-1/2        justify-start">
-                    <input type="submit" value='التالي '
-                        class='bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600'
-                        name="" id="">
-                </div>
-
-
-
-            </div>
-            </div>
-
-    </body>
-
-
-
-</x-app-layout>

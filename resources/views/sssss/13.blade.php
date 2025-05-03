@@ -1,19 +1,3 @@
-<x-app-layout>
-
-    <body class="body bg-white dark:bg-[#0F172A]">
-        <x-side-bar></x-side-bar>
-
-        <!-- CONTENT -->
-        <form method="GET" action="{{ route('schedules.index') }}"
-            class="content ml-12 transform ease-in-out duration-500 px-2 md:px-5 pb-4">
-            @csrf
-            <div class="mx-auto">
-                <div class = "p-4  mb-4 text-right text-xl text-bold      text-red-700 bg-white border-3xl border border-green-500   dark:bg-red-300     dark:text-red-800"
-                    role="alert">
-                    اسناد مواد الصف الثاني ثانوي علمي </div>
-                <div class="bg-white p-6 rounded  gap-3 flex flex-row-reverse flex-wrap">
-                    <input type="hidden" name="class_id" value="12">
-                    <input type="hidden" name="grade_class" value="ثاني ثانوي علمي">
 
                     <style>
                         .main-table {
@@ -121,31 +105,31 @@
                             /* محاذاة الجداول إلى بداية الحاوية (اليمين في هذه الحالة) */
                         }
                     </style>
-                    @for ($c = 1; $c < 10; $c++)
+                     @for ($c = 1; $c < 10; $c++)
                         <div class="table-section ">
                             <table class="main-table">
-                                <thead class="bg-red-300    ">
-                                    <tr class="colored-header-row">
+                                <thead  >
+                                    <tr  >
 
-                                        <td class="bg-red-300" colspan="1">1/{{ $c }}</td>
+                                        <td   colspan="1">1/{{ $c }}</td>
                                         <td colspan="3">الفصل</td>
 
                                     </tr>
-                                    <tr class="colored-header-row">
+                                    <tr  >
 
                                         <td colspan="1">اسم المعلمة</td>
                                         <td colspan="1">الحصص</td>
                                         <td colspan="1">المواد</td>
 
-                                        <td class="bg-red-300" colspan="1">عدد المواد</td>
+                                        <td   colspan="1">عدد المواد</td>
 
                                     </tr>
-                                </thead class="bg-red-300   ">
+                                </thead  >
                                 <tbody>
                                     @for ($i = 1; $i < 8; $i++)
                                         <tr>
-                                            <?php $classroom = $classrooms->where('name', 'ثاني ثانوي علمي')->first();
-                                            
+                                            <?php $classroom = $classrooms->where('name', 'ثالث ثانوي علمي')->first();
+
                                             $scc = $schedules
                                                 ->where('school_id', Auth::guard('school')->user()->id)
                                                 ->where('row_id', $i)
@@ -160,30 +144,19 @@
                                                 $teeee = ' ';
                                                 $teec = '  ';
                                             }
-                                            
-                                            ?>
-                                            <td><select
-                                                    name="class[{{ $c }}][{{ $i }}][teacher_id]"
-                                                    class="p-2">
-                                                    <option></option>
-                                                    @foreach ($teachers as $teacher)
-                                                        <option value="{{ $teacher->name }}"
-                                                            {{ $teeee == $teacher->name ? 'selected' : '' }}>
-                                                            {{ $teacher->name }}
-                                                        </option>
-                                                    @endforeach
 
-                                                </select></td>
-                                            <td class="bg-red-300">5</td>
-                                            <td><input
-                                                    name='class[{{ $c }}][{{ $i }}][subject_id]'
-                                                    type="text" value="{{ $teec }}">
-                                            </td>
-                                            <td class="bg-red-300" class="bg-red-300">{{ $i }}</td>
+                                            ?>
+                    <td> {{ $teeee }}
+                    </td>
+                    <td>5</td>
+                    <td>
+                         {{ $teec }}
+                    </td>
+                    <td>{{ $i }}</td>
 
                                         </tr>
                                     @endfor
-                                    <tr class="total-hours-row">
+                                    <tr  >
                                         <td colspan="4">مجموع الحصص 32</td>
                                     </tr>
 
@@ -192,26 +165,3 @@
                         </div>
                     @endfor
 
-                    <div class="w-full mt-6 p-4 flex gap-2">
-                        <div class=" flex w-1/2   justify-start">
-                            <a href="{{ url()->previous() }}"
-                                class="bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600">
-                                السابق
-                            </a>
-                        </div>
-                        <div class="flex  w-1/2        justify-start">
-                            <input type="submit" value='التالي '
-                                class='bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600'
-                                name="" id="">
-                        </div>
-
-
-
-                    </div>
-                </div>
-
-    </body>
-
-
-
-</x-app-layout>
