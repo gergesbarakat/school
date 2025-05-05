@@ -25,7 +25,7 @@
                                             <?php $classroom = $classrooms->where('name', 'ثاني ثانوي أدبي')->first();
 
                                             $scc = $schedules
-                                                ->where('school_id', Auth::guard('school')->user()->id)
+                                                ->where('school_id', $school_id)
                                                 ->where('row_id', $i)
                                                 ->where('class_id', $c)
                                                 ->where('grade_id', $classroom->grade_id)

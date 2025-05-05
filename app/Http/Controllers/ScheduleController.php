@@ -24,7 +24,7 @@ class ScheduleController extends Controller
         if ($request->class_id) {
 
             if($request->class_id == 15){
-                return redirect('/school');
+                return redirect('/terms');
             }
 
         } else {
@@ -151,7 +151,10 @@ class ScheduleController extends Controller
          $teachers = Auth::guard('web')->check() ? Teacher::all() : Teacher::where('school_id', Auth::guard('school')->user()->id)->get() ;
         $school_classes  = Auth::guard('web')->check() ? SchoolClass::all() : SchoolClass::where('school_id', Auth::guard('school')->user()->id)->get();
         if(Auth::guard('web')->check()){
-        return view('schedules.add');
+        return view('schedules.add',[
+            'schools' => School::all(),
+
+        ]);
         }else{
             return view('schedules.' . $request->class_id, [
                 'class_id' => $request->class_id + 1,
@@ -164,7 +167,7 @@ class ScheduleController extends Controller
                 'classrooms' => Classroom::all(),
             ]);
         }
-        
+
     }
 
     public function show(Request $request)
@@ -575,12 +578,12 @@ class ScheduleController extends Controller
             'schools' => School::all(),
             'grades' => Grade::all(),
             'schedules' => Schedule::all(),
-            'teachers' => Teacher::where('school_id', Auth::guard('school')->user()->id)->get(),
+            'teachers' => Teacher::where('school_id', 19),
             'subjects' => Subject::all(),
-            'school_classes' => SchoolClass::where('school_id', Auth::guard('school')->user()->id)->get(),
+            'school_classes' => SchoolClass::where('school_id', 19),
             'classrooms' => Classroom::all(),
         ];
-        return view('sssss.10', $sharedData);
+        return view('sssss.9', $sharedData);
     }
 
 }

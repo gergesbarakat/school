@@ -10,16 +10,29 @@
 
                 </div>
             </div>
+            <style>
+                table {
+                        min-width: 30%;
+                    }
+                @media (max-width: 768px) {
+
+
+                     table {
+                        min-width: 100%;
+                    }
+                }
+            </style>
             <form action="{{ route('schedules.index') }}" method='GET'
                 class="mx-auto flex flex-col items-end justify-start">
                 @csrf
-                <div class="w-full" style="display: flex; gap: 30px; direction: rtl; justify-content: center; font-family: Arial;">
+                <div class="w-full flex-wrap"
+                    style="display: flex; gap: 30px; direction: rtl; justify-content: center; font-family: Arial;">
                     <input type="hidden" name="class_id" value="1">
                     @foreach ($grades as $gid => $grade)
                         @php
                             $clll = $classrooms->where('grade_id', $grade->id)->all();
                         @endphp
-                        <table  style="border: 3px solid black; border-collapse: collapse; text-align: center;">
+                        <table style="border: 3px solid black; border-collapse: collapse; text-align: center;">
                             <thead style="background-color: #e6adad;">
                                 <tr>
                                     <th colspan="2" style="border: 3px solid black;">{{ $grade->name }}</th>
@@ -47,7 +60,7 @@
                     @endforeach
 
                 </div>
-                <div class="w-full mt-6 p-4 flex gap-2">
+                <div class="w-full mt-6 p-4 flex-row-reverse flex gap-2">
                     <div class=" flex w-1/2   justify-start">
                         <a href="{{ url()->previous() }}"
                             class="bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600">

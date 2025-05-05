@@ -44,7 +44,7 @@
                         }
                     </style>
                     <table>
-                         
+
                         <thead>
                             <tr>
 
@@ -145,7 +145,7 @@
                                     <td><select name="col[{{ $i }}][3]" class="p-2">
                                             <option></option>
 
- 
+
                                             @foreach ($teachers as $teacher)
                                                 <option
                                                     {{ $c != null && $c->teacher_id == $teacher->name ? 'selected' : '' }}
@@ -251,7 +251,7 @@
                                     <td><select name="col[{{ $i }}][7]" class="p-2">
                                             <option></option>
 
-                                            
+
                                             @foreach ($teachers as $teacher)
                                                 <option
                                                     {{ $e != null && $e->teacher_id == $teacher->name ? 'selected' : '' }}
@@ -299,7 +299,7 @@
                 </div>
 
             </div>
-            <div class="w-full mt-6 p-4 flex gap-2">
+            <div class="w-full mt-6 p-4 flex-row-reverse flex gap-2">
                 <div class=" flex w-1/2   justify-start">
                     <a href="{{ url()->previous() }}"
                         class="bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600">

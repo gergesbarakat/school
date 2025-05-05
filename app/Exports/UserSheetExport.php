@@ -8,7 +8,9 @@ use App\Models\Schedule;
 use App\Models\School;
 use App\Models\SchoolClass;
 use App\Models\Subject;
+
 use App\Models\Teacher;
+use App\Models\Term;
 use Illuminate\Support\Facades\Auth;
 use Maatwebsite\Excel\Concerns\WithMultipleSheets;
 
@@ -26,16 +28,20 @@ class UserSheetExport implements WithMultipleSheets
 
         $sharedData = [
             'school_id' => $this->school_id,
-            'schools' => School::all(),
+            'schools' => School::where('id', $this->school_id)->get(),
             'grades' => Grade::all(),
-            'schedules' => Schedule::all(),
+            'schedules' => Schedule::where('school_id', $this->school_id)->get(),
             'teachers' => Teacher::where('school_id', $this->school_id)->get(),
             'subjects' => Subject::all(),
             'school_classes' => SchoolClass::where('school_id', $this->school_id)->get(),
             'classrooms' => Classroom::all(),
+            'terms' => Term::where('school_id', $this->school_id)->get(),
+
         ];
         $viewsWithTitles = [
             ['view' => 'sssss.add', 'title' => 'معلومات هامة'],
+            ['view' => 'sssss.edit', 'title' => 'انصبة المعلمات'],
+            ['view' => 'sssss.table', 'title' => 'عدد الفصول'],
 
             ['view' => 'sssss.1', 'title' => 'أول ابتدائي'],
             ['view' => 'sssss.2', 'title' => 'ثاني ابتدائي'],
@@ -51,6 +57,7 @@ class UserSheetExport implements WithMultipleSheets
             ['view' => 'sssss.12', 'title' => 'ثاني ثانوي أدبي'],
             ['view' => 'sssss.13', 'title' => 'ثالث ثانوي علمي'],
             ['view' => 'sssss.14', 'title' => 'ثالث ثانوي أدبي'],
+            ['view' => 'sssss.terms', 'title' => 'الشروط'],
 
             // add up to 14 as needed
         ];

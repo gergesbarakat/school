@@ -1,33 +1,37 @@
-<x-app-layout>
-    <body class="body bg-white dark:bg-[#0F172A]">
-        <x-side-bar></x-side-bar>
+@foreach ($grades as $gid => $grade)
+    <table style="border: 3px solid black; border-collapse: collapse; text-align: center;">
+        <thead style="background-color: #e6adad;">
 
-        <!-- CONTENT -->
-        <div class="content ml-12 transform ease-in-out duration-500 px-2 md:px-5 pb-4">
-            <div class="mx-auto">
-                <h2 class="text-2xl font-bold text-center">Schedules for {{ $school->name }}</h2>
+            @php
+                $clll = $classrooms->where('grade_id', $grade->id)->all();
+            @endphp
 
-                <table class="min-w-full mt-4 table-auto">
-                    <thead>
+
+            <table style="border: 3px solid black; border-collapse: collapse; text-align: center;">
+                <thead style="background-color: #e6adad;">
+                    <tr>
+                        <th colspan="2" style="border: 3px solid black;">{{ $grade->name }}</th>
+                    </tr>
+                    <tr>
+                        <th style="border: 3px solid black;">الصف</th>
+                        <th style="border: 3px solid black;">عدد الفصول</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($clll as $cid => $c)
                         <tr>
-                            <th class="px-4 py-2">Subject</th>
-                            <th class="px-4 py-2">Teacher</th>
-                            <th class="px-4 py-2">Day</th>
-                            <th class="px-4 py-2">Time</th>
+                            <td style="border: 3px solid black;">{{ $c->name }}</td>
+                            <td style="border: 3px solid black;">
+
+                                <input type="number" class="pr-3"
+                                    name="grade[{{ $grade->id }}][{{ $c->id }}]"
+                                    value="{{ count($school_classes->where('school_id', $school_id)->where('grade_id', $grade->id)->where('classroom_id', $c->id)) > 0 ? $school_classes->where('school_id', $school_id)->where('grade_id', $grade->id)->where('classroom_id', $c->id)->first()->number : '' }}"
+                                    min="0" max="7">
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($school->schedules as $schedule)
-                            <tr>
-                                <td class="border px-4 py-2">{{ $schedule->subject->name }}</td>
-                                <td class="border px-4 py-2">{{ $schedule->teacher->name }}</td>
-                                <td class="border px-4 py-2">{{ $schedule->day }}</td>
-                                <td class="border px-4 py-2">{{ $schedule->time }}</td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </body>
-</x-app-layout>
+                    @endforeach
+                </tbody>
+            </table>
+        </thead>
+    </table>
+@endforeach

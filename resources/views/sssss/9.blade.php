@@ -1,281 +1,216 @@
-                    <style>
-                        table {
-                            border-collapse: collapse;
-                            width: 100%;
-                            direction: rtl;
-                            text-align: center;
-                        }
+<table>
 
-                        th,
-                        td {
-                            border: 2px solid black;
-                            padding: 8px;
-                        }
+    <thead>
+        <tr>
+            <th>← الفصل</th>
+        </tr>
 
-                        thead th {
-                            background-color: #f9d5d5;
-                        }
+        <tr>
 
-                        .total-row {
-                            font-weight: bold;
-                            color: red;
-                        }
+            <th>عدد المواد</th>
+            <th>المواد</th>
+            <th>الحصص</th>
 
-                        input {
-                            border: none;
-                            text-align: center;
-                            width: 100%;
-                        }
-                    </style>
-                    <table>
+        </tr>
+        <tr>
 
-                        <thead>
-                            <tr>
+            @php $grade = $grades->where('name', 'المرحلة المتوسطة')    @endphp
+            @php $class = $classrooms->where('name', 'ثالث متوسط')     @endphp
+            <input type="hidden" name="grade_id" value="{{ $grade->first()->id }}">
+            <input type="hidden" name="classroom_id" value="{{ $class->first()->id }}">
 
-                                <th rowspan="2">عدد المواد</th>
-                                <th rowspan="2">المواد</th>
-                                <th rowspan="2">الحصص</th>
-                                <th colspan="7">← الفصل</th>
+            @php $school_classess  = $school_classes->where('grade_id',$grade->first()->id)->where('classroom_id',$class->first()->id)  @endphp
+            @if (count(value: $school_classess) > 0)
 
-                            </tr>
-                            <tr>
+                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
+                    {!! $i == 1 ? '  <th>3/1<br> مثلاً نوره خالد  ' : '' !!}
+                    {!! $i == 2 ? '  <th>فصل 3/2<br> مثلاً نوره خالد  ' : '' !!}
+                    {!! $i == 3 ? '  <th>فصل 3/3<br> مثلاً نوره خالد  ' : '' !!}
+                    {!! $i == 4 ? '  <th>فصل 3/4<br> مثلاً نوره خالد  ' : '' !!}
+                    {!! $i == 5 ? '  <th>فصل 3/5<br> مثلاً نوره خالد  ' : '' !!}
+                    {!! $i == 6 ? '  <th>فصل 3/6<br> مثلاً نوره خالد  ' : '' !!}
+                    {!! $i == 7 ? '  <th>فصل 3/7<br> مثلاً نوره خالد  ' : '' !!}
+                @endfor
+            @endif
 
-                                @php $grade = $grades->where('name', 'المرحلة المتوسطة')    @endphp
-                                @php $class = $classrooms->where('name', 'ثالث متوسط')    @endphp
-                                <input type="hidden" name="grade_id" value="{{ $grade->first()->id }}">
-                                <input type="hidden" name="classroom_id" value="{{ $class->first()->id }}">
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>1</td>
+            <td>د إسلامية</td>
+            <td>5</td>
+            @if (count(value: $school_classess) > 0)
 
-                                @php $school_classess  = $school_classes->where('grade_id',$grade->first()->id)->where('classroom_id',$class->first()->id)  @endphp
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    {!! $i == 1 ? '  <th>فصل 3/1<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 2 ? '  <th>فصل 3/2<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 3 ? '  <th>فصل 3/3<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 4 ? '  <th>فصل 3/4<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 5 ? '  <th>فصل 3/5<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 6 ? '  <th>فصل 3/6<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 7 ? '  <th>فصل 3/7<br> مثلاً نوره خالد  ' : '' !!}
-                                @endfor
+                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
+                    <?php
+                    $c = $schedules
+                        ->where('row_id', 1)
+                        ->where('class_id', $i)
+                        ->where('grade_id', $grade->first()->id)
+                        ->where('classroom_id', $class->first()->id)
+                        ->first();
+                    ?>
+                    <td>
+                        {{ $c->teacher_id }} </td>
+                @endfor
+            @endif
 
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>د إسلامية</td>
-                                <td>5</td>
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    <?php
-                                    $a = $schedules
-                                        ->where('row_id', 1)
-                                        ->where('class_id', $i)
-                                        ->where('grade_id', $grade->first()->id)
-                                        ->where('classroom_id', $class->first()->id)
-                                        ->first();
-                                    ?>
-                                    <td><select name="col[{{ $i }}][1]" class="p-2">
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>لغتي</td>
+            <td>8</td>
 
-                                            <option></option>
+            @if (count(value: $school_classess) > 0)
 
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $a != null && $a->teacher_id != null && $a->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <td>2</td>
-                                <td>لغتي</td>
-                                <td>8</td>
-
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    <?php
-                                    $b = $schedules
-                                        ->where('row_id', 2)
-                                        ->where('class_id', $i)
-                                        ->where('grade_id', $grade->first()->id)
-                                        ->where('classroom_id', $class->first()->id)
-                                        ->first();
-                                    ?>
-                                    <td><select name="col[{{ $i }}][2]" class="p-2">
-                                            <option></option>
+                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
+                    <?php
+                    $c = $schedules
+                        ->where('row_id', 2)
+                        ->where('class_id', $i)
+                        ->where('grade_id', $grade->first()->id)
+                        ->where('classroom_id', $class->first()->id)
+                        ->first();
+                    ?>
+                    <td>
+                        {{ $c->teacher_id }} </td>
+                @endfor
+            @endif
 
 
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $b != null && $b->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
-                                @endfor
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>رياضيات</td>
+            <td>5</td>
+            @if (count(value: $school_classess) > 0)
 
-                            </tr>
-                            <tr>
-                                <td>3</td>
-                                <td>رياضيات</td>
-                                <td>5</td>
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    <?php
-                                    $c = $schedules
-                                        ->where('row_id', 1)
-                                        ->where('class_id', $i)
-                                        ->where('grade_id', $grade->first()->id)
-                                        ->where('classroom_id', $class->first()->id)
-                                        ->first();
-                                    ?>
-                                    <td><select name="col[{{ $i }}][3]" class="p-2">
-                                            <option></option>
+                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
+                    <?php
+                    $c = $schedules
+                        ->where('row_id', 1)
+                        ->where('class_id', $i)
+                        ->where('grade_id', $grade->first()->id)
+                        ->where('classroom_id', $class->first()->id)
+                        ->first();
+                    ?>
+                    <td>
+                        {{ $c->teacher_id }} </td>
+                @endfor
+            @endif
 
+        </tr>
+        <tr>
+            <td>4</td>
+            <td>علوم</td>
+            <td>3</td>
+            @if (count(value: $school_classess) > 0)
 
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $c != null && $c->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <td>4</td>
-                                <td>علوم</td>
-                                <td>3</td>
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    <?php
-                                    $d = $schedules
-                                        ->where('row_id', 4)
-                                        ->where('class_id', $i)
-                                        ->where('grade_id', $grade->first()->id)
-                                        ->where('classroom_id', $class->first()->id)
-                                        ->first();
-                                    ?>
-                                    <td><select name="col[{{ $i }}][4]" class="p-2">
-                                            <option></option>
+                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
+                    <?php
+                    $c = $schedules
+                        ->where('row_id', 4)
+                        ->where('class_id', $i)
+                        ->where('grade_id', $grade->first()->id)
+                        ->where('classroom_id', $class->first()->id)
+                        ->first();
+                    ?>
+                    <td>
+                        {{ $c->teacher_id }} </td>
+                @endfor
+            @endif
 
+        </tr>
+        <tr>
+            <td>5</td>
+            <td>E</td>
+            <td>3</td>
+            @if (count(value: $school_classess) > 0)
 
+                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
+                    <?php
+                    $c = $schedules
+                        ->where('row_id', 5)
+                        ->where('class_id', $i)
+                        ->where('grade_id', $grade->first()->id)
+                        ->where('classroom_id', $class->first()->id)
+                        ->first();
+                    ?>
+                    <td>
+                        {{ $c->teacher_id }} </td>
+                @endfor
+            @endif
 
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $d != null && $d->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <td>5</td>
-                                <td>E</td>
-                                <td>3</td>
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    <?php
-                                    $e = $schedules
-                                        ->where('row_id', 5)
-                                        ->where('class_id', $i)
-                                        ->where('grade_id', $grade->first()->id)
-                                        ->where('classroom_id', $class->first()->id)
-                                        ->first();
-                                    ?>
-                                    <td><select name="col[{{ $i }}][5]" class="p-2">
-                                            <option></option>
+        </tr>
+        <tr>
+            <td>6</td>
+            <td>فنية</td>
+            <td>2</td>
+            @if (count(value: $school_classess) > 0)
 
+                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
+                    <?php
+                    $c = $schedules
+                        ->where('row_id', 6)
+                        ->where('class_id', $i)
+                        ->where('grade_id', $grade->first()->id)
+                        ->where('classroom_id', $class->first()->id)
+                        ->first();
+                    ?>
+                    <td>
+                        {{ $c->teacher_id }} </td>
+                @endfor
+            @endif
 
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $e != null && $e->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <td>6</td>
-                                <td>فنية</td>
-                                <td>2</td>
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    <?php
-                                    $f = $schedules
-                                        ->where('row_id', 6)
-                                        ->where('class_id', $i)
-                                        ->where('grade_id', $grade->first()->id)
-                                        ->where('classroom_id', $class->first()->id)
-                                        ->first();
-                                    ?>
-                                    <td><select name="col[{{ $i }}][6]" class="p-2">
-                                            <option></option>
+        </tr>
+        <tr>
+            <td>7</td>
+            <td>بدنية</td>
+            <td>3</td>
+            @if (count(value: $school_classess) > 0)
 
+                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
+                    <?php
+                    $c = $schedules
+                        ->where('row_id', 7)
+                        ->where('class_id', $i)
+                        ->where('grade_id', $grade->first()->id)
+                        ->where('classroom_id', $class->first()->id)
+                        ->first();
+                    ?>
+                    <td>
+                        {{ $c->teacher_id }} </td>
+                @endfor
+            @endif
 
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $f != null && $f->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <td>7</td>
-                                <td>بدنية</td>
-                                <td>3</td>
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    <?php
-                                    $e = $schedules
-                                        ->where('row_id', 7)
-                                        ->where('class_id', $i)
-                                        ->where('grade_id', $grade->first()->id)
-                                        ->where('classroom_id', $class->first()->id)
-                                        ->first();
-                                    ?>
-                                    <td><select name="col[{{ $i }}][7]" class="p-2">
-                                            <option></option>
+        </tr>
+        <tr>
+            <td>8</td>
+            <td>مهارات</td>
+            <td>1</td>
+            @if (count(value: $school_classess) > 0)
 
+                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
+                    <?php
+                    $c = $schedules
+                        ->where('row_id', 8)
+                        ->where('class_id', $i)
+                        ->where('grade_id', $grade->first()->id)
+                        ->where('classroom_id', $class->first()->id)
+                        ->first();
+                    ?>
+                    <td>
+                        {{ $c->teacher_id }} </td>
+                @endfor
+            @endif
 
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $e != null && $e->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
-                                @endfor
-                            </tr>
-                            <tr>
-                                <td>8</td>
-                                <td>مهارات</td>
-                                <td>1</td>
-                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                    <?php
-                                    $g = $schedules
-                                        ->where('row_id', 8)
-                                        ->where('class_id', $i)
-                                        ->where('grade_id', $grade->first()->id)
-                                        ->where('classroom_id', $class->first()->id)
-                                        ->first();
-                                    ?>
-                                    <td><select name="col[{{ $i }}][8]" class="p-2">
-                                            <option></option>
-
-
-                                            @foreach ($teachers as $teacher)
-                                                <option
-                                                    {{ $g != null && $g->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
-                                                    {{ $teacher->name }}</option>
-                                            @endforeach
-                                        </select></td>
-                                @endfor
-                            </tr>
-                        </tbody>
-                        <tfoot>
-                            <tr class="total-row">
-                                <td colspan="3">مجموع الحصص 30</td>
-                                <td colspan="7"></td>
-                            </tr>
-                        </tfoot>
-                    </table>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr class="total-row">
+            <td colspan="3">مجموع الحصص 30</td>
+            <td colspan="7"></td>
+        </tr>
+    </tfoot>
+</table>

@@ -15,7 +15,8 @@
                     والهدف من ذلك حتى لا يصبح هناك خلط في جدول المعلمتين وبالتالي يخرج الجدول وبه أخطاء !!
                 </div>
             </div>
-            <form action="{{ route('school-classes.index') }}" method='GET' class="mx-auto flex flex-col items-end justify-start">
+            <form action="{{ route('school-classes.index') }}" method='GET'
+                class="mx-auto flex flex-col items-end justify-start">
                 @csrf
 
                 <div class = "p-4  mb-4  text-3xl text-bold      text-red-700 bg-white border-3xl border border-green-500   dark:bg-red-200 dark:text-red-800"
@@ -58,22 +59,20 @@
                         @php  $row = 0;  @endphp
                         @if (count($teachers) > 0)
                             @foreach ($teachers as $teacher)
-                                 
                                 <tr class="odd:bg-gray-100">
 
 
-                                    <td class="rowid px-4 py-2 bg-red-200 text-black border border-lg border-black text-sm">
+                                    <td
+                                        class="rowid px-4 py-2 bg-red-200 text-black border border-lg border-black text-sm">
                                         {{ ++$row }}</td>
-                                        <input type="hidden" id="row_id{{ $row }}"
-                                        name="row[{{ $row }}][row_id]"
-                                        value=" {{ $row }}" required
+                                    <input type="hidden" id="row_id{{ $row }}"
+                                        name="row[{{ $row }}][row_id]" value=" {{ $row }}" required
                                         class="hidden  block w-full px-4 py-2 border   shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
-        
-        
+
+
                                     <td class=" border border-lg border-black text-sm">
                                         <input type="text" id="name{{ $row }}"
-                                            name="row[{{ $row }}][name]"
-                                            value="{{ $teacher->name }}" required
+                                            name="row[{{ $row }}][name]" value="{{ $teacher->name }}" required
                                             class="  block w-full px-4 py-2 border   shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
                                     </td>
                                     <td class=" border border-lg border-black text-sm">
@@ -83,10 +82,13 @@
                                             class="  block w-full px-4 py-2 border   shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
                                     </td>
                                     <td class=" border border-lg border-black text-sm">
-                                        <input type="text" id="no7{{ $row }}"
-                                            name="row[{{ $row }}][no7]"
-                                            value=" {{ $teacher->no7 }}" required
-                                            class="  block w-full px-4 py-2 border   shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
+                                        <select class='w-full h-full p-3' id="no7{{ $row }}"
+                                            name="row[{{ $row }}][no7]">
+                                            <option {{ $teacher->no7 == 'لا' ? 'selected' : '' }} value="لا">لا
+                                            </option>
+                                            <option {{ $teacher->no7 == 'نعم' ? 'selected' : '' }} value="نعم">نعم
+                                            </option>
+                                        </select>
                                     </td>
                                 </tr>
                             @endforeach
@@ -96,12 +98,12 @@
 
                                 <td class="rowid px-4 py-2 bg-red-200 text-black border border-lg border-black text-sm">
                                     {{ ++$row }}</td>
-                                    <input type="hidden" id="row_id{{ $row }}"
+                                <input type="hidden" id="row_id{{ $row }}"
                                     name="row[{{ $row }}][row_id]"
                                     value="{{ old('row[' . $row . '][row_id]') }}" required
                                     class="hidden  block w-full px-4 py-2 border   shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
-    
-    
+
+
                                 <td class=" border border-lg border-black text-sm">
                                     <input type="text" id="name{{ $row }}"
                                         name="row[{{ $row }}][name]"
@@ -115,10 +117,15 @@
                                         class="  block w-full px-4 py-2 border   shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
                                 </td>
                                 <td class=" border border-lg border-black text-sm">
-                                    <input type="text" id="no7{{ $row }}"
-                                        name="row[{{ $row }}][no7]"
-                                        value="{{ old('row[' . $row . '][no7]') }}" required
-                                        class="  block w-full px-4 py-2 border   shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
+                                    <select class='w-full h-full p-3' id="no7{{ $row }}"
+                                        name="row[{{ $row }}][no7]">
+                                        <option {{ old('row[' . $row . '][no7]') == 'لا' ? 'selected' : '' }}
+                                            value="لا">لا
+                                        </option>
+                                        <option {{ old('row[' . $row . '][no7]') == 'نعم' ? 'selected' : '' }}
+                                            value="نعم">نعم
+                                        </option>
+                                    </select>
                                 </td>
                             </tr>
 
@@ -140,9 +147,9 @@
 
 
                 </div>
-                <div class="w-full mt-6 p-4 flex gap-2">
+                <div class="w-full mt-6 p-4 flex-row-reverse flex gap-2">
                     <div class=" flex w-1/2   justify-start">
-                        <a href="{{ url()->previous()  }}"
+                        <a href="{{ url()->previous() }}"
                             class="bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600">
                             السابق
                         </a>
@@ -186,9 +193,13 @@
                         class="block w-full px-4 py-2 border shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500" required>
                 </td>
                 <td class="border border-lg border-black text-sm">
-                    <input type="text" id="no7${newRowNumber}" name="row[${newRowNumber}][no7]"
-                        class="block w-full px-4 py-2 border shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500" required>
-                </td>
+                    <select class='w-full h-full p-3' id="no7${newRowNumber}" name="row[${newRowNumber}][no7]">
+                                            <option   value="لا">لا
+                                            </option>
+                                            <option   value="نعم">نعم
+                                            </option>
+                                        </select>
+                 </td>
             `;
 
             // Append the new row to the table body

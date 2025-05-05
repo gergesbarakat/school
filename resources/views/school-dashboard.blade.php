@@ -16,7 +16,7 @@
 
         @php $a = 0; @endphp
         <form method="GET" action="{{ route('teachers.index') }}"
-            class="flex  justify-center items-center gap-2 w-full flex-wrap ml-6 mb-4 ">
+            class="flex  flex-row-reverse justify-center items-center gap-2 w-full flex-wrap ml-6 mb-4 ">
             @csrf
             <div class = "p-4  text-right w-2/6 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
                 role="alert">
@@ -76,11 +76,148 @@
                         <td style="border: 1px solid #000;">2</td>
                         <td style="border: 1px solid #000;">المنطقة التعليمية</td>
                         <td style="border: 1px solid #000;">
-
-                            <input type="text"
-                                {{ $schools->find(Auth::guard('school')->user()->id)->area ? '  value=' . $schools->find(Auth::guard('school')->user()->id)->area : '' }}
-                                name="area" style="width: 90%;">
-                        </td>
+                            <select name='area' class="w-full h-full px-4 py-2">
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمنطقة الرياض') ? '  selected' : '' }}>
+                                    إدارة التعليم بمنطقة الرياض </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمنطقة الجوف') ? '  selected' : '' }}>
+                                    إدارة التعليم بمنطقة الجوف </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمنطقة الحدود الشمالية') ? '  selected' : '' }}>
+                                    إدارة التعليم بمنطقة الحدود الشمالية </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة القريات') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة القريات </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمنطقة تبوك') ? '  selected' : '' }}>
+                                    إدارة التعليم بمنطقة تبوك </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمنطقة حائل') ? '  selected' : '' }}>
+                                    إدارة التعليم بمنطقة حائل </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بحفر الباطن') ? '  selected' : '' }}>
+                                    إدارة التعليم بحفر الباطن </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بالمنطقة الشرقية') ? '  selected' : '' }}>
+                                    إدارة التعليم بالمنطقة الشرقية </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة الأحساء') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة الأحساء </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة الخرج') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة الخرج </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة شقراء') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة شقراء </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة الدوادمي') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة الدوادمي </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة القويعية') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة القويعية </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة المجمعة') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة المجمعة </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظتي حوطة بني تميم والحريق') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظتي حوطة بني تميم والحريق </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمنطقة القصيم') ? '  selected' : '' }}>
+                                    إدارة التعليم بمنطقة القصيم </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة الغاط') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة الغاط </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة البكيرية') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة البكيرية </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة الرس') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة الرس </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة المذنب') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة المذنب </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة عنيزة') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة عنيزة </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة الأفلاج') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة الأفلاج </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة عفيف') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة عفيف </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة الزلفي') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة الزلفي </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة وادي الدواسر') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة وادي الدواسر </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمنطقة المدينة المنورة') ? '  selected' : '' }}>
+                                    إدارة التعليم بمنطقة المدينة المنورة </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة المهد') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة المهد </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة العلا') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة العلا </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة ينبع') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة ينبع </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة الطائف') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة الطائف </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمنطقة مكة المكرمة') ? '  selected' : '' }}>
+                                    إدارة التعليم بمنطقة مكة المكرمة </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة القنفذة') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة القنفذة </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة الليث') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة الليث </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمنطقة الباحة') ? '  selected' : '' }}>
+                                    إدارة التعليم بمنطقة الباحة </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة جدة') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة جدة </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة بيشة') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة بيشة </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة بالمخواة') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة بالمخواة </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة النماص') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة النماص </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمنطقة عسير') ? '  selected' : '' }}>
+                                    إدارة التعليم بمنطقة عسير </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة رجال ألمع') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة رجال ألمع </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحايل عسير') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحايل عسير </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمنطقة نجران') ? '  selected' : '' }}>
+                                    إدارة التعليم بمنطقة نجران </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة سراة عبيدة') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة سراة عبيدة </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمنطقة جازان') ? '  selected' : '' }}>
+                                    إدارة التعليم بمنطقة جازان </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة التعليم بمحافظة صبيا') ? '  selected' : '' }}>
+                                    إدارة التعليم بمحافظة صبيا </option>
+                                <option
+                                    {{ $schools->find(Auth::guard('school')->user()->id)->area == trim('إدارة تعليم محافظة ظهران الجنوب') ? '  selected' : '' }}>
+                                    إدارة تعليم محافظة ظهران الجنوب </option>
+                                <option>إدارة التعليم بمحافظة شرورة</option>
+                            </select>
+                         </td>
                     </tr>
                     <tr>
                         <td style="border: 1px solid #000;">3</td>
@@ -107,7 +244,9 @@
                         <td style="border: 1px solid #000;">5</td>
                         <td style="border: 1px solid #000;">جوال للتواصل</td>
                         <td style="border: 1px solid #000;">
-                <input type="text"   {{ $schools->find(Auth::guard('school')->user()->id)->phone ? '  value=' . $schools->find(Auth::guard('school')->user()->id)->phone : '' }} name="phone" style="width: 90%;">
+                            <input type="text"
+                                {{ $schools->find(Auth::guard('school')->user()->id)->phone ? '  value=' . $schools->find(Auth::guard('school')->user()->id)->phone : '' }}
+                                name="phone" style="width: 90%;">
 
                         </td>
                     </tr>
@@ -121,9 +260,5 @@
 
         </form>
 
-        <a target="_blank" href="{{ route('export.schedules', ['school_id' => Auth::guard('school')->user()->id]) }}"
-            class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-             تصدير الجدول
-         </a>
 
 </x-app-layout>

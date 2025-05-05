@@ -11,11 +11,18 @@
                 <div class = "p-4  mb-4 text-right text-xl text-bold      text-red-700 bg-white border-3xl border border-green-500   dark:bg-red-300     dark:text-red-800"
                     role="alert">
                     اسناد مواد الصف الثاني ثانوي علمي </div>
-                <div class="bg-white p-6 rounded  gap-3 flex flex-row-reverse flex-wrap">
+                <div class="bg-white p-6 flex-wrap rounded  gap-3 flex flex-row-reverse flex-wrap">
                     <input type="hidden" name="class_id" value="12">
                     <input type="hidden" name="grade_class" value="ثاني ثانوي علمي">
 
                     <style>
+                        @media (max-width: 768px) {
+
+
+.table-section {
+    min-width: 100%;
+}
+}
                         .main-table {
                             width: 100%;
                             border-collapse: collapse;
@@ -145,7 +152,7 @@
                                     @for ($i = 1; $i < 8; $i++)
                                         <tr>
                                             <?php $classroom = $classrooms->where('name', 'ثاني ثانوي علمي')->first();
-                                            
+
                                             $scc = $schedules
                                                 ->where('school_id', Auth::guard('school')->user()->id)
                                                 ->where('row_id', $i)
@@ -160,7 +167,7 @@
                                                 $teeee = ' ';
                                                 $teec = '  ';
                                             }
-                                            
+
                                             ?>
                                             <td><select
                                                     name="class[{{ $c }}][{{ $i }}][teacher_id]"
@@ -192,7 +199,7 @@
                         </div>
                     @endfor
 
-                    <div class="w-full mt-6 p-4 flex gap-2">
+                    <div class="w-full mt-6 p-4 flex-row-reverse flex gap-2">
                         <div class=" flex w-1/2   justify-start">
                             <a href="{{ url()->previous() }}"
                                 class="bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600">

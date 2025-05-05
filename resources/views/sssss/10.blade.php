@@ -22,13 +22,7 @@
                     <?php
                     $classroom = $classrooms->where('name', 'أول ثانوي')->first();
 
-                    $scc = $schedules
-                        ->where('school_id', Auth::guard('school')->user()->id)
-                        ->where('row_id', $i)
-                        ->where('class_id', $c)
-                        ->where('grade_id', $classroom->grade_id)
-                        ->where('classroom_id', $classroom->id)
-                        ->first();
+                    $scc = $schedules->where('school_id', $school_id)->where('row_id', $i)->where('class_id', $c)->where('grade_id', $classroom->grade_id)->where('classroom_id', $classroom->id)->first();
                     if (isset($scc) && $scc != null) {
                         $teeee = $scc->teacher_id;
                         $teec = $scc->subject_id;
@@ -41,7 +35,7 @@
                     </td>
                     <td>5</td>
                     <td>
-                         {{ $teec }}
+                        {{ $teec }}
                     </td>
                     <td>{{ $i }}</td>
 

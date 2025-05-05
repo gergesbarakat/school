@@ -12,6 +12,7 @@ use App\Http\Controllers\ExportsController;
 use App\Models\School;
 use Illuminate\Support\Facades\Route;
 use \App\Http\Controllers\SubjectController;
+use App\Http\Controllers\TermController;
 use Illuminate\Support\Facades\Auth;
 
 Route::middleware('auth:web')->group(function () {
@@ -48,12 +49,10 @@ Route::prefix('school')->name('school.')->group(function () {
         Route::delete('/profile', [SchoolProfileEdit::class, 'destroy'])->name('profile.destroy');
     });
 });
-Route::resource('teachers', TeacherController::class);
 
 Route::middleware('multiauth')->group(function () {
 
-
-    Route::get('/', function () {
+     Route::get('/', function () {
         if (Auth::guard('web')->check()) {
             return view('dashboard', [
                 'schools' => School::all(),
@@ -84,14 +83,17 @@ Route::middleware('multiauth')->group(function () {
     Route::resource('school-classes', SchoolClasssontroller::class);
 
     Route::resource('schedules', ScheduleController::class);
+    Route::resource('terms', controller: TermController::class);
 
     Route::get('/get-schedule', [ScheduleController::class, 'getSchedule']);
     Route::get('/schedules/fetch', [ScheduleController::class, 'fetch'])->name('schedules.fetch');
     Route::get('/classes/{gradeId}', [ScheduleController::class, 'getClassesByGrade'])->name('getClassesByGrade');
+    Route::resource('teachers', TeacherController::class);
 
     Route::get('/get-schedule', [ScheduleController::class, 'getSchedule']);
     Route::get('/schedules/fetch', [ScheduleController::class, 'fetch'])->name('schedules.fetch');
     Route::get('/export/schedules', [ExportsController::class, 'export'])->name('export.schedules');
+    Route::get('/test', [ScheduleController::class, 'test'])->name('test');
 
 });
 
