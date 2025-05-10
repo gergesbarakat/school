@@ -37,13 +37,14 @@ class SchoolAuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): RedirectResponse
     {
+                Auth::guard('web')->logout();
+
         Auth::guard('school')->logout();
-        Auth::guard('web')->logout();
 
         $request->session()->invalidate();
 
-        $request->session()->regenerateToken();
+        $request->session()->regenerate();
 
-        return redirect('/school/login');
+        return redirect()->route('school.login');
     }
 }

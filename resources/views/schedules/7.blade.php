@@ -64,12 +64,12 @@
                                 @php $school_classess  = $school_classes->where('grade_id',$grade->first()->id)->where('classroom_id',$class->first()->id)  @endphp
                                 @for ($i = 1; $i <= $school_classess->first()->number; $i++)
                                     {!! $i == 1 ? '  <th>فصل 1/1<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 2 ? '  <th>فصل 1/2<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 3 ? '  <th>فصل 1/3<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 4 ? '  <th>فصل 1/4<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 5 ? '  <th>فصل 1/5<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 6 ? '  <th>فصل 1/6<br> مثلاً نوره خالد  ' : '' !!}
-                                    {!! $i == 7 ? '  <th>فصل 1/7<br> مثلاً نوره خالد  ' : '' !!}
+                                    {!! $i == 2 ? '  <th>فصل 2/1<br> مثلاً نوره خالد  ' : '' !!}
+                                    {!! $i == 3 ? '  <th>فصل 3/1<br> مثلاً نوره خالد  ' : '' !!}
+                                    {!! $i == 4 ? '  <th>4/1<br> مثلاً نوره خالد  ' : '' !!}
+                                    {!! $i == 5 ? '  <th>فصل 5/1<br> مثلاً نوره خالد  ' : '' !!}
+                                    {!! $i == 6 ? '  <th>فصل 6/1<br> مثلاً نوره خالد  ' : '' !!}
+                                    {!! $i == 7 ? '  <th>فصل 7/1<br> مثلاً نوره خالد  ' : '' !!}
                                 @endfor
 
                             </tr>
@@ -353,7 +353,7 @@
             </div>
             <div class="w-full mt-6 p-4 flex-row-reverse flex gap-2">
                 <div class=" flex w-1/2   justify-start">
-                    <a href="{{ url()->previous() }}"
+                    <a href="{{ route('schedules.index', ['class_id' => '6']) }}"
                         class="bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600">
                         السابق
                     </a>

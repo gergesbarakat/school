@@ -104,7 +104,7 @@
                             <tr>
                                 <td>2</td>
                                 <td>لغتي</td>
-                                <td>8</td>
+                                <td>7</td>
 
                                 @for ($i = 1; $i <= $school_classess->first()->number; $i++)
                                     <?php
@@ -132,7 +132,7 @@
                             <tr>
                                 <td>3</td>
                                 <td>رياضيات</td>
-                                <td>5</td>
+                                <td>6</td>
                                 @for ($i = 1; $i <= $school_classess->first()->number; $i++)
                                 <?php
                                     $c = $schedules
@@ -301,7 +301,7 @@
             </div>
             <div class="w-full mt-6 p-4 flex-row-reverse flex gap-2">
                 <div class=" flex w-1/2   justify-start">
-                    <a href="{{ url()->previous() }}"
+                    <a href="{{ route('schedules.index', ['class_id' => '1']) }}"
                         class="bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600">
                         السابق
                     </a>

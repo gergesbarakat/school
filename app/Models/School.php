@@ -5,15 +5,18 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class School extends Authenticatable
 {
+    use Notifiable;
+
     protected $guard = 'school';
 
     protected $fillable = [
         'name',
         'address',
-         'manager_name',
+        'manager_name',
         'phone',
         'email',
         'password',
@@ -23,8 +26,8 @@ class School extends Authenticatable
         'country',
         'grades_classes',
         'data',
-         'logo',
-     ];
+        'logo',
+    ];
     protected $hidden = [
         'password',
         'remember_token',
@@ -32,6 +35,10 @@ class School extends Authenticatable
     protected $casts = [
         'grades_classes' => 'array',
     ];
+    public function sendPasswordResetNotification($token)
+    {
+        $this->notify(new \App\Notifications\SchoolResetPasswordNotification($token));
+    }
 
     public function getLogoUrlAttribute()
     {
@@ -55,7 +62,7 @@ class School extends Authenticatable
         return $this->hasMany(Grade::class);
     }
     public function schoolClasses()
-{
-    return $this->hasMany(SchoolClass::class);
-}
+    {
+        return $this->hasMany(SchoolClass::class);
+    }
 }

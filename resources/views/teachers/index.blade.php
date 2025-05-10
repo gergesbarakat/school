@@ -59,11 +59,10 @@
                         @php  $row = 0;  @endphp
                         @if (count($teachers) > 0)
                             @foreach ($teachers as $teacher)
-                                <tr class="odd:bg-gray-100">
+                                <tr class="odd:bg-gray-100 rowid">
 
 
-                                    <td
-                                        class="rowid px-4 py-2 bg-red-200 text-black border border-lg border-black text-sm">
+                                    <td class=" px-4 py-2 bg-red-200 text-black border border-lg border-black text-sm">
                                         {{ ++$row }}</td>
                                     <input type="hidden" id="row_id{{ $row }}"
                                         name="row[{{ $row }}][row_id]" value=" {{ $row }}" required
@@ -93,10 +92,10 @@
                                 </tr>
                             @endforeach
                         @else
-                            <tr class="odd:bg-gray-100">
+                            <tr class="odd:bg-gray-100 rowid">
 
 
-                                <td class="rowid px-4 py-2 bg-red-200 text-black border border-lg border-black text-sm">
+                                <td class=" px-4 py-2 bg-red-200 text-black border border-lg border-black text-sm">
                                     {{ ++$row }}</td>
                                 <input type="hidden" id="row_id{{ $row }}"
                                     name="row[{{ $row }}][row_id]"
@@ -149,7 +148,7 @@
                 </div>
                 <div class="w-full mt-6 p-4 flex-row-reverse flex gap-2">
                     <div class=" flex w-1/2   justify-start">
-                        <a href="{{ url()->previous() }}"
+                        <a href="{{ route('school.school-dashboard' ) }}"
                             class="bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600">
                             السابق
                         </a>
@@ -210,7 +209,7 @@
             const tableBody = document.getElementById('asd'); // your <tbody> id
             const rows = tableBody.querySelectorAll('tr');
             if (rows.length > 0) {
-                tableBody.removeChild(rows[rows.length - 1]);
+                rows[rows.length - 1].remove();
                 newRowNumber = newRowNumber - 1
             }
         }

@@ -13,30 +13,33 @@ class TeacherController extends Controller
 
     public function index(Request $request)
     {
-         // Check the guard being used
-        if (Auth::guard('school')->check()) {
-            $request->validate([
-                'area' => 'required',
-                'number_of_classes' => 'required',
-                'manager_name' => 'required',
-                'phone' => 'required',
-
-            ]);
-            School::where('id', Auth::guard('school')->user()->id)->update([
-                'area' => $request->area,
-                'number_of_classes' => $request->number_of_classes,
-                'manager_name' => $request->manager_name,
-                'phone' => $request->phone,
-            ]);
-
+        if ($request->back) {
             $teachers = Teacher::where('school_id', Auth::guard('school')->user()->id)->get();
 
+            return view('teachers.index', compact('teachers'));
         } else {
-            // For 'web' guard, show all teachers
-            $teachers = Teacher::all();
-        }
+            if (Auth::guard('school')->check()) {
+                $request->validate([
+                    'area' => 'required',
+                    'number_of_classes' => 'required',
+                    'manager_name' => 'required',
+                    'phone' => ['required', 'regex:/^05\d{8}$/'],
 
-        return view('teachers.index', compact('teachers'));
+                ]);
+                School::where('id', Auth::guard('school')->user()->id)->update([
+                    'area' => $request->area,
+                    'number_of_classes' => $request->number_of_classes,
+                    'manager_name' => $request->manager_name,
+                    'phone' => $request->phone,
+                ]);
+
+                $teachers = Teacher::where('school_id', Auth::guard('school')->user()->id)->get();
+            } else {
+                // For 'web' guard, show all teachers
+                $teachers = Teacher::all();
+            }
+            return view('teachers.index', compact('teachers'));
+        }
     }
 
     public function create()

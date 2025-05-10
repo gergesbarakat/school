@@ -19,14 +19,14 @@
     <thead>
 
         <tr>
-            <th>
+            <th style="border: 1px solid #000;">
                 م</th>
 
-            <th>
+            <th style="border: 1px solid #000;">
                 الاسم</th>
-            <th>
+            <th style="border: 1px solid #000;">
                 نصابها</th>
-            <th>
+            <th style="border: 1px solid #000;">
                 يعطي لهم سوابع
             </th>
         </tr>
@@ -38,17 +38,17 @@
                 <tr class="odd:bg-gray-100">
 
 
-                    <td class="rowid px-4 py-2 bg-red-200 text-black border border-lg border-black text-sm">
+                    <td style="border: 1px solid #000;" class="rowid px-4 py-2 bg-red-200 text-black border border-lg border-black text-sm">
                         {{ ++$row }}</td>
 
 
-                    <td class=" border border-lg border-black text-sm">
+                    <td style="border: 1px solid #000;" class=" border border-lg border-black text-sm">
                         {{ $teacher->name }}
                     </td>
-                    <td class=" border border-lg border-black text-sm">
+                    <td style="border: 1px solid #000;" class=" border border-lg border-black text-sm">
                         {{ $teacher->number_of_classes }}
                     </td>
-                    <td class=" border border-lg border-black text-sm">
+                    <td style="border: 1px solid #000;" class=" border border-lg border-black text-sm">
 
                         {{ $teacher->no7 }}
                     </td>

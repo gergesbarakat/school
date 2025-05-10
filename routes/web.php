@@ -28,10 +28,9 @@ Route::middleware('auth:web')->group(function () {
 
     Route::resource('schools', SchoolController::class);
     Route::resource('classrooms', ClassroomController::class);
-
 });
-Route::get('export/', [ ExportsController::class, 'export' ])->name('export');
-Route::get('import/', [ ExportsController::class, 'import' ])->name('import');
+Route::get('export/', [ExportsController::class, 'export'])->name('export');
+Route::get('import/', [ExportsController::class, 'import'])->name('import');
 Route::prefix('school')->name('school.')->group(function () {
 
     Route::middleware('auth:school')->group(function () {
@@ -52,7 +51,7 @@ Route::prefix('school')->name('school.')->group(function () {
 
 Route::middleware('multiauth')->group(function () {
 
-     Route::get('/', function () {
+    Route::get('/', function () {
         if (Auth::guard('web')->check()) {
             return view('dashboard', [
                 'schools' => School::all(),
@@ -62,7 +61,6 @@ Route::middleware('multiauth')->group(function () {
                 'schools' => School::all(),
             ]);
         }
-
     })->name('dashboard');
 
     Route::get('school', function () {
@@ -75,8 +73,7 @@ Route::middleware('multiauth')->group(function () {
                 'schools' => School::all(),
             ]);
         }
-
-    })->name('dashboard');
+    })->name(name: 'dashboard');
 
     Route::resource('subjects', SubjectController::class);
     Route::resource('grades', GradeController::class);
@@ -94,7 +91,6 @@ Route::middleware('multiauth')->group(function () {
     Route::get('/schedules/fetch', [ScheduleController::class, 'fetch'])->name('schedules.fetch');
     Route::get('/export/schedules', [ExportsController::class, 'export'])->name('export.schedules');
     Route::get('/test', [ScheduleController::class, 'test'])->name('test');
-
 });
 
 require __DIR__ . '/auth.php';

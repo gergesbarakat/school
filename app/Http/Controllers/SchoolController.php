@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\School;
+use App\Models\SchoolClass;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
 
@@ -19,8 +21,9 @@ class SchoolController extends Controller
     public function index()
     {
         $schools = School::all(); // Retrieve all schools
-        
-         return view('schools.index', compact('schools'));
+        $classes = SchoolClass::all();
+       
+        return view('schools.index', compact('schools','classes'));
     }
 
     /**

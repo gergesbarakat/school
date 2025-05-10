@@ -13,7 +13,7 @@
             <form action="{{ route('terms.index') }}" method='GET' class="mx-auto flex flex-col items-end justify-start">
                 @csrf
 
-                
+
 
                 @if (session('success'))
                     <div class="bg-green-500 text-white p-3 rounded mb-4">
@@ -47,7 +47,7 @@
 
                                     <td class=" border border-lg border-black text-sm">
                                         <input type="text" id="text{{ $row }}"
-                                            name="text[{{ $row }}] " required value=" {{ $term->text }}"
+                                            name="text[{{ $row }}] "   value=" {{ $term->text }}"
                                             class="  block w-full px-4 py-2 border   shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
                                     </td>
 
@@ -61,7 +61,7 @@
                                     {{ ++$row }}</td>
 
                                 <td class=" border border-lg border-black text-sm">
-                                    <input type="text" id="text{{ $row }}" name="text[] " required
+                                    <input type="text" id="text{{ $row }}" name="text[] "
                                         class="  block w-full px-4 py-2 border   shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
                                     </input>
                                 </td>
@@ -87,7 +87,7 @@
                 </div>
                 <div class="w-full mt-6 p-4 flex-row-reverse flex gap-2">
                     <div class=" flex w-1/2   justify-start">
-                        <a href="{{ url()->previous() }}"
+                        <a href="{{ route('schedules.index', ['class_id' => '14']) }}"
                             class="bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600">
                             السابق
                         </a>
@@ -125,7 +125,7 @@
                                     ${newRowNumber}</td>
 
                                 <td class=" border border-lg border-black text-sm">
-                                    <input type="text" id="text${newRowNumber}" name="text[] " required
+                                    <input type="text" id="text${newRowNumber}" name="text[] "  
                                         class="  block w-full px-4 py-2 border   shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
                                     </input>
                                 </td>

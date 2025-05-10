@@ -4,6 +4,7 @@
 use Illuminate\Support\Facades\Auth;
 
 ?>
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -28,6 +29,20 @@ use Illuminate\Support\Facades\Auth;
 
 <body class="font-sans antialiased h-full min-h-screen top-0 bg-white  ">
     <div class="min-h-screen h-full min-h-screen bg-gray-100 dark:bg-gray-900 top-0 bg-white  ">
+        @if ($errors->any())
+            <div class = "absolute top-10 w-full    p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                role="alert">
+                <span class = "font-medium">Danger alert!</span> {{ implode(' | ', $errors->all()) }}
+
+            </div>
+        @endif
+        @if (session('status'))
+            <div class = "  absolute top-10 w-full  p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800"
+                role="alert">
+                <span class = "font-medium">Success ! {{ session('status') }}</span>
+
+            </div>
+        @endif
         {{-- @include('layouts.navigation') --}}
 
         <!-- Page Heading -->
@@ -42,13 +57,7 @@ use Illuminate\Support\Facades\Auth;
         <!-- Page Content -->
 
         <main class="top-0 h-full min-h-screen pt-20 bg-white  ">
-            @if ($errors->any())
-                <div class = "ml-5  p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
-                    role="alert">
-                    <span class = "font-medium">Danger alert!</span> {{ implode(' | ', $errors->all()) }}
 
-                </div>
-            @endif
             {{-- <nav class = "flex px-5 py-3 text-gray-700  rounded-lg bg-gray-50 dark:bg-[#1E293B] " aria-label="Breadcrumb">
                 <ol class = "inline-flex items-center space-x-1 md:space-x-3">
                     <li class = "inline-flex items-center">
@@ -129,8 +138,38 @@ use Illuminate\Support\Facades\Auth;
     tailwind.config = {
         darkMode: 'class',
     }
+    document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('input[type="password"]').forEach(function (input) {
+        // Create eye icon wrapper
+        const wrapper = document.createElement('div');
+        wrapper.classList.add('relative');
 
-    </script>
+        // Clone the input and insert into wrapper
+        const clonedInput = input.cloneNode(true);
+        input.replaceWith(wrapper);
+        wrapper.appendChild(clonedInput);
+
+        // Create the toggle icon
+        const toggleIcon = document.createElement('span');
+        toggleIcon.innerHTML = '👁️'; // You can use a better SVG/icon if needed
+        toggleIcon.classList.add(
+            'absolute', 'right-2', 'top-1/2', '-translate-y-1/2', 'cursor-pointer'
+        );
+        wrapper.appendChild(toggleIcon);
+
+        // Toggle logic
+        toggleIcon.addEventListener('click', () => {
+            if (clonedInput.type === 'password') {
+                clonedInput.type = 'text';
+                toggleIcon.innerHTML = '🙈'; // icon changes when visible
+            } else {
+                clonedInput.type = 'password';
+                toggleIcon.innerHTML = '👁️';
+            }
+        });
+    });
+});
+</script>
 
 
 </html>

@@ -16,7 +16,7 @@ class SchoolProfileEdit extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
+        return view('school-profile.edit', [
             'user' => $request->user(),
         ]);
     }
@@ -34,7 +34,7 @@ class SchoolProfileEdit extends Controller
 
         $request->user()->save();
 
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('school.profile.edit')->with('status', 'profile-updated');
     }
 
     /**
@@ -55,6 +55,6 @@ class SchoolProfileEdit extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return Redirect::to('/');
+        return Redirect::to('/school/login');
     }
 }

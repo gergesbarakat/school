@@ -245,9 +245,12 @@
                         <td style="border: 1px solid #000;">جوال للتواصل</td>
                         <td style="border: 1px solid #000;">
                             <input type="text"
-                                {{ $schools->find(Auth::guard('school')->user()->id)->phone ? '  value=' . $schools->find(Auth::guard('school')->user()->id)->phone : '' }}
-                                name="phone" style="width: 90%;">
-
+                            name="phone"
+                            pattern="05\d{8}"
+                            title="رقم الهاتف يجب ان يبدا ب 05 ويتكون من 10 ارقام"
+                            value="{{ old('phone', optional(Auth::guard('school')->user())->phone) }}"
+                            class="border rounded p-2 w-full"
+                            required>
                         </td>
                     </tr>
                 </tbody>

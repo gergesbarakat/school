@@ -14,19 +14,22 @@ class TermController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->input('text') && count($request->input('text')) > 0){
-            Term::where('school_id',operator: Auth::guard('school')->user()->id )->delete();
+        if($request->input('text') && count($request->input('text')) > 0 ){
+                Term::where(column: 'school_id',operator: Auth::guard('school')->user()->id )->delete();
 
-            foreach($request->input('text') as $ted){
+                foreach($request->input('text') as $ted){
+                    if(!empty($ted)){
 
 
 
-                Term::create([
-                    'school_id' => Auth::guard('school')->user()->id,
-                    'text' => $ted,
-                ]);
-            }
-            return redirect()->route( 'school.school-dashboard' );
+                    Term::create([
+                        'school_id' => Auth::guard('school')->user()->id,
+                        'text' => $ted,
+                    ]);}
+                }
+                return view(view: 'welcome' );
+
+
 
         }else{
             $terms = Term::where('school_id',Auth::guard('school')->user()->id)->get();

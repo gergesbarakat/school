@@ -12,7 +12,7 @@
                     role="alert">
                     اسناد مواد الصف الأول الابـتدائي
                 </div>
-                 <div class="bg-white p-6 rounded shadow-md">
+                <div class="bg-white p-6 rounded shadow-md">
                     <input type="hidden" name="class_id" value="2">
                     <style>
                         table {
@@ -79,7 +79,7 @@
                                 <td>1</td>
                                 <td>د إسلامية</td>
                                 <td>5</td>
-                                 @for ($i = 1; $i <= $school_classess->first()->number; $i++)
+                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
                                     <?php
                                     $a = $schedules
                                         ->where('row_id', 1)
@@ -87,15 +87,17 @@
                                         ->where('grade_id', $grade->first()->id)
                                         ->where('classroom_id', $class->first()->id)
                                         ->first();
+ 
                                     ?>
+
                                     <td><select name="col[{{ $i }}][1]" class="p-2">
 
                                             <option></option>
 
                                             @foreach ($teachers as $teacher)
                                                 <option
-                                                    {{ $a != null && $a->teacher_id != null && $a->teacher_id == $teacher->name ? 'selected' : '' }}
-                                                    value="    {{ $teacher->name }}">
+                                                    {{ $a != null && $a->teacher_id == $teacher->name ? 'selected' : '' }}
+                                                    value="{{ $teacher->name }}">
                                                     {{ $teacher->name }}</option>
                                             @endforeach
                                         </select></td>
@@ -134,14 +136,14 @@
                                 <td>رياضيات</td>
                                 <td>5</td>
                                 @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                <?php
+                                    <?php
                                     $c = $schedules
                                         ->where('row_id', 1)
                                         ->where('class_id', $i)
                                         ->where('grade_id', $grade->first()->id)
                                         ->where('classroom_id', $class->first()->id)
                                         ->first();
-                                     ?>
+                                    ?>
                                     <td><select name="col[{{ $i }}][3]" class="p-2">
                                             <option></option>
 
@@ -301,7 +303,7 @@
             </div>
             <div class="w-full mt-6 p-4 flex-row-reverse flex gap-2">
                 <div class=" flex w-1/2   justify-start">
-                    <a href="{{ url()->previous() }}"
+                    <a href="{{ route('school-classes.index') }}"
                         class="bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600">
                         السابق
                     </a>

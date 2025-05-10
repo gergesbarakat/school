@@ -339,6 +339,7 @@
                                         </select></td>
                                 @endfor
                             </tr>
+                            
                         </tbody>
                         <tfoot>
                             <tr class="total-row">
@@ -353,7 +354,7 @@
             </div>
             <div class="w-full mt-6 p-4 flex-row-reverse flex gap-2">
                 <div class=" flex w-1/2   justify-start">
-                    <a href="{{ url()->previous() }}"
+                    <a href="{{ route('schedules.index', ['class_id' => '3']) }}"
                         class="bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600">
                         السابق
                     </a>

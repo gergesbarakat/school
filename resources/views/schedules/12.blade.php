@@ -4,7 +4,7 @@
         <x-side-bar></x-side-bar>
 
         <!-- CONTENT -->
-        <form method="GET" action="{{ route('schedules.index') }}"
+        <form method="POST" action="{{ route('schedules.index') }}"
             class="content ml-12 transform ease-in-out duration-500 px-2 md:px-5 pb-4">
             @csrf
             <div class="mx-auto">
@@ -134,7 +134,7 @@
                                 <thead class="bg-red-300    ">
                                     <tr class="colored-header-row">
 
-                                        <td class="bg-red-300" colspan="1">1/{{ $c }}</td>
+                                        <td class="bg-red-300" colspan="1">{{ $c }}/2</td>
                                         <td colspan="3">الفصل</td>
 
                                     </tr>
@@ -201,7 +201,7 @@
 
                     <div class="w-full mt-6 p-4 flex-row-reverse flex gap-2">
                         <div class=" flex w-1/2   justify-start">
-                            <a href="{{ url()->previous() }}"
+                            <a href="{{ route('schedules.index', ['class_id' => '11']) }}"
                                 class="bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600">
                                 السابق
                             </a>
