@@ -16,10 +16,9 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->string('phone')->nullable();
             $table->string('specialization')->nullable();
-            $table->foreignId('school_id')->constrained()->onDelete('cascade');
-            $table->unsignedBigInteger('subject_id')->nullable();
-            $table->foreign('subject_id')->references('id')->on('subjects')->onDelete('set null');
-
+            $table->string('school_id');
+            $table->string('subject_id')->nullable();
+ 
             $table->timestamps();
         });
     }

@@ -51,8 +51,8 @@
 
                                             <input type="number" class="pr-3"
                                                 name="grade[{{ $grade->id }}][{{ $c->id }}]"
-                                                value="{{ count($school_classes->where('school_id', Auth::guard('school')->user()->id)->where('grade_id', $grade->id)->where('classroom_id', $c->id)) > 0? $school_classes->where('school_id', Auth::guard('school')->user()->id)->where('grade_id', $grade->id)->where('classroom_id', $c->id)->first()->number: '' }}"
-                                                min="0" max="7">
+                                                value="{{ count($school_classes->where('school_id', Auth::guard('school')->user()->id)->where('grade_id', $grade->id)->where('classroom_id', $c->id)) > 0? $school_classes->where('school_id', Auth::guard('school')->user()->id)->where('grade_id', $grade->id)->where('classroom_id', $c->id)->first()->number: '0' }}"
+                                                min="0" max="7"  >
                                         </td>
                                     </tr>
                                 @endforeach
@@ -81,51 +81,6 @@
 
         </div>
     </body>
-    <script>
-        let newRowNumber;
 
-        function addRow() {
-            const tableBody = document.getElementById('asd'); // ← replace with your table body ID
-
-            // Get the last rowid number
-            const allRowIds = document.querySelectorAll('.rowid');
-            newRowNumber = allRowIds ? allRowIds.length = allRowIds.length + 1 : allRowIds.length = 1;
-
-            // Create the new row HTML
-            const newRow = document.createElement('tr');
-            newRow.className = 'odd:bg-gray-100';
-
-            newRow.innerHTML = `
-                <td class="rowid px-4 py-2 bg-red-200 text-black border border-lg border-black text-sm">${newRowNumber}</td>
-                <td class="border border-lg border-black text-sm">
-                    <input type="text" id="name${newRowNumber}" name="row[${newRowNumber}][name]"
-                        class="block w-full px-4 py-2 border shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500" required>
-                </td>
-                                    <input type="hidden" id="row_id${newRowNumber}" name="row[${newRowNumber}][row_id]"
-                        class="block w-full hidden px-4 py-2 border shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500" required>
-
-                <td class="border border-lg border-black text-sm">
-                    <input type="text" id="subject${newRowNumber}" name="row[${newRowNumber}][subject]"
-                        class="block w-full px-4 py-2 border shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500" required>
-                </td>
-                <td class="border border-lg border-black text-sm">
-                    <input type="text" id="no7${newRowNumber}" name="row[${newRowNumber}][no7]"
-                        class="block w-full px-4 py-2 border shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500" required>
-                </td>
-            `;
-
-            // Append the new row to the table body
-            tableBody.appendChild(newRow);
-        }
-
-        function deleteLastRow() {
-            const tableBody = document.getElementById('asd'); // your <tbody> id
-            const rows = tableBody.querySelectorAll('tr');
-            if (rows.length > 0) {
-                tableBody.removeChild(rows[rows.length - 1]);
-                newRowNumber = newRowNumber - 1
-            }
-        }
-    </script>
 
 </x-app-layout>

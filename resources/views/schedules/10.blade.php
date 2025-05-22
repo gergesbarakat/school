@@ -27,7 +27,6 @@
                         .main-table {
                             width: 100%;
                             border-collapse: collapse;
-                            margin-bottom: 20px;
                         }
 
                         .main-table td,
@@ -44,7 +43,6 @@
                         .class-table {
                             width: 100%;
                             border-collapse: collapse;
-                            margin-top: 10px;
                         }
 
                         .class-table td,
@@ -63,21 +61,12 @@
                             font-weight: bold;
                         }
 
-                        .total-hours-row td {
-                            font-weight: bold;
-                        }
 
                         @media (max-width: 768px) {
 
                             .table-section {
                                 min-width: 100%;
                             }
-                        }
-
-                        /* Add spacing between main tables */
-                        .main-table {
-                            margin-bottom: 20px;
-                            /* Increased spacing */
                         }
 
                         .class-table {}
@@ -129,14 +118,34 @@
                             /* محاذاة الجداول إلى بداية الحاوية (اليمين في هذه الحالة) */
                         }
                     </style>
+
                     @for ($c = 1; $c < 10; $c++)
+                        @if ($c == 1)
+                            @php $color = '#B1A0C7'; @endphp
+                        @elseif($c == 2)
+                            @php $color = '#E6B8B7'; @endphp
+                        @elseif($c == 3)
+                            @php $color = '#C5D9F1'; @endphp
+                        @elseif($c == 4)
+                            @php $color = '#BFBFBF'; @endphp
+                        @elseif($c == 5)
+                            @php $color = '#FCD5B4'; @endphp
+                        @elseif($c == 6)
+                            @php $color = '#92CDDC'; @endphp
+                        @elseif($c == 7)
+                            @php $color = '#C4D79B'; @endphp
+                        @elseif($c == 8)
+                            @php $color = '#FFC000'; @endphp
+                        @elseif($c == 9)
+                            @php $color = '#E6B8B7'; @endphp
+                        @endif
                         <div class="table-section ">
                             <table class="main-table">
-                                <thead class="bg-red-300    ">
+                                <thead class="bg-[#EEECE1]    ">
                                     <tr class="colored-header-row">
 
-                                        <td class="bg-red-300" colspan="1">{{ $c }}/1</td>
-                                        <td colspan="3">الفصل</td>
+                                        <td class="bg-[{{ $color }}] " colspan="1">{{ $c }}/1</td>
+                                        <td colspan="3" class="bg-[#ffffff] ">الفصل</td>
 
                                     </tr>
                                     <tr class="colored-header-row">
@@ -145,7 +154,7 @@
                                         <td colspan="1">الحصص</td>
                                         <td colspan="1">المواد</td>
 
-                                        <td class="bg-red-300" colspan="1">عدد المواد</td>
+                                        <td class=" " colspan="1">عدد المواد</td>
 
                                     </tr>
                                 </thead class="bg-red-300   ">
@@ -153,7 +162,7 @@
                                     @for ($i = 1; $i < 8; $i++)
                                         <tr>
                                             <?php $classroom = $classrooms->where('name', 'أول ثانوي')->first();
-
+                                            
                                             $scc = $schedules
                                                 ->where('school_id', Auth::guard('school')->user()->id)
                                                 ->where('row_id', $i)
@@ -164,10 +173,13 @@
                                             if (isset($scc) && $scc != null) {
                                                 $teeee = $scc->teacher_id;
                                                 $teec = $scc->subject_id;
+                                                $asdasdsad = $scc->schedule_data;
                                             } else {
                                                 $teeee = ' ';
                                                 $teec = '  ';
+                                                $asdasdsad = ' ';
                                             }
+                                            
                                             ?>
                                             <td><select
                                                     name="class[{{ $c }}][{{ $i }}][teacher_id]"
@@ -181,17 +193,28 @@
                                                     @endforeach
 
                                                 </select></td>
-                                            <td class="bg-red-300">5</td>
+                                            <td class="bg-[#EEECE1] m-0"><select
+                                                    name="class[{{ $c }}][{{ $i }}][number]"
+                                                    class="p-2   bg-[#EEECE1] m-0">
+                                                    <option></option>
+                                                    @for ($o = 1; $o < 8; $o++)
+                                                        <option value="{{ $o }}"
+                                                            {{ $asdasdsad == $o ? 'selected' : '' }}>
+                                                            {{ $o }}
+                                                        </option>
+                                                    @endfor
+
+                                                </select></td>
                                             <td><input
                                                     name='class[{{ $c }}][{{ $i }}][subject_id]'
                                                     type="text" value="{{ $teec }}">
                                             </td>
-                                            <td class="bg-red-300" class="bg-red-300">{{ $i }}</td>
+                                            <td class="bg-[#EEECE1]">{{ $i }}</td>
 
                                         </tr>
                                     @endfor
-                                    <tr class="total-hours-row">
-                                        <td colspan="4">مجموع الحصص 32</td>
+                                    <tr class="total-hours-row bg-[#4F6228] ">
+                                        <td colspan="4" class="p-2 text-white">مجموع الحصص 32</td>
                                     </tr>
 
                                 </tbody>
@@ -216,6 +239,10 @@
 
                     </div>
                 </div>
+            </div>
+
+
+        </form>
 
     </body>
 

@@ -12,7 +12,7 @@
                     role="alert">
                     اسناد مواد الصف الثالث الابـتدائي
                 </div>
-                 <div class="bg-white p-6 rounded shadow-md">
+                <div class="bg-white p-6 rounded shadow-md">
                     <input type="hidden" name="class_id" value="4">
                     <style>
                         table {
@@ -43,6 +43,14 @@
                             width: 100%;
                         }
                     </style>
+                    @php $grade = $grades->where('name', 'المرحلة الابتدائية')    @endphp
+                    @php $class = $classrooms->where('name', 'ثالث ابتدائي')    @endphp
+                    <input type="hidden" name="grade_id" value="{{ $grade->first()->id }}">
+                    <input type="hidden" name="classroom_id" value="{{ $class->first()->id }}">
+
+                    @php $school_classess  = $school_classes->where('grade_id',$grade->first()->id)->where('classroom_id',$class->first()->id)  @endphp
+                    @if (count(value: $school_classess) > 0)
+
                     <table>
 
                         <thead>
@@ -56,12 +64,7 @@
                             </tr>
                             <tr>
 
-                                @php $grade = $grades->where('name', 'المرحلة الابتدائية')    @endphp
-                                @php $class = $classrooms->where('name', 'ثالث ابتدائي')    @endphp
-                                <input type="hidden" name="grade_id" value="{{ $grade->first()->id }}">
-                                <input type="hidden" name="classroom_id" value="{{ $class->first()->id }}">
 
-                                @php $school_classess  = $school_classes->where('grade_id',$grade->first()->id)->where('classroom_id',$class->first()->id)  @endphp
                                 @for ($i = 1; $i <= $school_classess->first()->number; $i++)
                                     {!! $i == 1 ? '  <th>فصل ثالث ( أ )<br> مثلاً نوره خالد  ' : '' !!}
                                     {!! $i == 2 ? '  <th>فصل ثالث ( ب )<br> مثلاً نوره خالد  ' : '' !!}
@@ -79,7 +82,7 @@
                                 <td>1</td>
                                 <td>د إسلامية</td>
                                 <td>5</td>
-                                 @for ($i = 1; $i <= $school_classess->first()->number; $i++)
+                                @for ($i = 1; $i <= $school_classess->first()->number; $i++)
                                     <?php
                                     $a = $schedules
                                         ->where('row_id', 1)
@@ -134,14 +137,14 @@
                                 <td>رياضيات</td>
                                 <td>6</td>
                                 @for ($i = 1; $i <= $school_classess->first()->number; $i++)
-                                <?php
+                                    <?php
                                     $c = $schedules
                                         ->where('row_id', 1)
                                         ->where('class_id', $i)
                                         ->where('grade_id', $grade->first()->id)
                                         ->where('classroom_id', $class->first()->id)
                                         ->first();
-                                     ?>
+                                    ?>
                                     <td><select name="col[{{ $i }}][3]" class="p-2">
                                             <option></option>
 
@@ -295,7 +298,7 @@
                             </tr>
                         </tfoot>
                     </table>
-
+@endif
                 </div>
 
             </div>

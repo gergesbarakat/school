@@ -7,6 +7,8 @@ use App\Models\Grade;
 use App\Models\School;
 use App\Models\SchoolClass;
 use App\Models\Teacher;
+use App\Models\Setting;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -26,7 +28,6 @@ class SchoolClasssontroller extends Controller
                             'number_of_classes' => $row['subject'],
                             'no7' => $row['no7'],
                         ]);
-
                     } else {
                         Teacher::create([
                             'school_id' => Auth::guard('school')->user()->id,
@@ -37,7 +38,6 @@ class SchoolClasssontroller extends Controller
 
                         ]);
                     }
-
                 }
             }
 
@@ -50,6 +50,8 @@ class SchoolClasssontroller extends Controller
             'classrooms' => Classroom::all(),
             'teachers' => Teacher::all(),
             'school_classes' => SchoolClass::all(),
+            'settings' => Setting::all(),
+
         ]);
     }
 

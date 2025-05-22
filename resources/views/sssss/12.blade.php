@@ -25,17 +25,19 @@
 
                         $scc = $schedules->where('school_id', $school_id)->where('row_id', $i)->where('class_id', $c)->where('grade_id', $classroom->grade_id)->where('classroom_id', $classroom->id)->first();
                         if (isset($scc) && $scc != null) {
-                            $teeee = $scc->teacher_id;
-                            $teec = $scc->subject_id;
-                        } else {
-                            $teeee = ' ';
-                            $teec = '  ';
-                        }
+                        $teeee = $scc->teacher_id;
+                        $teec = $scc->subject_id;
+                        $asdasdsad = $scc->schedule_data;
+                    } else {
+                        $teeee = ' ';
+                        $teec = '  ';
+                        $asdasdsad = ' ';
+                    }
 
-                        ?>
-                        <td style="border: 1px solid #000;"> {{ $teeee }}
-                        </td>
-                        <td style="border: 1px solid #000;">5</td>
+                    ?>
+                    <td style="border: 1px solid #000;"> {{ $teeee }}
+                    </td>
+                    <td style="border: 1px solid #000;">{{ $asdasdsad }}</td>
                         <td style="border: 1px solid #000;">
                             {{ $teec }}
                         </td>

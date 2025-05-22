@@ -6,13 +6,11 @@
             <div>
                 <div class = "p-4  mb-4 text-right text-3xl text-bold      text-red-700 bg-white border-3xl border border-green-500   dark:bg-red-200 dark:text-red-800"
                     role="alert">
-                    تنبيه مهم جدًا
+                    {{ $settings->where('name', 'teacher1')->first()->text }}
                 </div>
                 <div class = "p-4  mb-4 text-right text-xl text-bold      text-red-700 bg-white border-3xl border border-green-500   dark:bg-red-200 dark:text-red-800"
                     role="alert">
-                    عند وجود تشابه في الأسماء بين معلمتين مثلا - نوره الحربي حاسب و نوره الحربي لغتي - الحل هنا نكتب اسم
-                    المعلمة واسم والدها فقط بدون اسم القبيلة فتصبح الأولى - نوره محمد حاسب والثانية نوره عبدالله لغتي -
-                    والهدف من ذلك حتى لا يصبح هناك خلط في جدول المعلمتين وبالتالي يخرج الجدول وبه أخطاء !!
+                    {{ $settings->where('name', 'teacher2')->first()->text }}
                 </div>
             </div>
             <form action="{{ route('school-classes.index') }}" method='GET'

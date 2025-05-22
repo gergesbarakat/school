@@ -7,6 +7,7 @@
         <form method="POST" action="{{ route('schedules.index') }}"
             class="content ml-12 transform ease-in-out duration-500 px-2 md:px-5 pb-4">
             @csrf
+            @method('POST')
             <div class="mx-auto">
                 <div class = "p-4  mb-4 text-right text-xl text-bold      text-red-700 bg-white border-3xl border border-green-500   dark:bg-red-300     dark:text-red-800"
                     role="alert">
@@ -130,13 +131,32 @@
                         }
                     </style>
                     @for ($c = 1; $c < 10; $c++)
+                        @if ($c == 1)
+                            @php $color = '#C5D9F1'; @endphp
+                        @elseif($c == 2)
+                            @php $color = '#E6B8B7'; @endphp
+                        @elseif($c == 3)
+                            @php $color = '#B1A0C7'; @endphp
+                        @elseif($c == 4)
+                            @php $color = '#FCD5B4'; @endphp
+                        @elseif($c == 5)
+                            @php $color = '#C4D79B'; @endphp
+                        @elseif($c == 6)
+                            @php $color = '#FFC000'; @endphp
+                        @elseif($c == 7)
+                            @php $color = '#FFFF00'; @endphp
+                        @elseif($c == 8)
+                            @php $color = '#92CDDC'; @endphp
+                        @elseif($c == 9)
+                            @php $color = '#BFBFBF'; @endphp
+                        @endif
                         <div class="table-section ">
                             <table class="main-table">
-                                <thead class="bg-red-300    ">
+                                <thead class="bg-[#EEECE1]    ">
                                     <tr class="colored-header-row">
 
-                                        <td class="bg-red-300" colspan="1">{{ $c }}/3</td>
-                                        <td colspan="3">الفصل</td>
+                                        <td class="bg-[{{ $color }}] " colspan="1">{{ $c }}/3</td>
+                                        <td colspan="3" class="bg-[#ffffff] ">الفصل</td>
 
                                     </tr>
                                     <tr class="colored-header-row">
@@ -145,7 +165,7 @@
                                         <td colspan="1">الحصص</td>
                                         <td colspan="1">المواد</td>
 
-                                        <td class="bg-red-300" colspan="1">عدد المواد</td>
+                                        <td class=" " colspan="1">عدد المواد</td>
 
                                     </tr>
                                 </thead class="bg-red-300   ">
@@ -164,9 +184,11 @@
                                             if (isset($scc) && $scc != null) {
                                                 $teeee = $scc->teacher_id;
                                                 $teec = $scc->subject_id;
+                                                $asdasdsad = $scc->schedule_data;
                                             } else {
                                                 $teeee = ' ';
                                                 $teec = '  ';
+                                                $asdasdsad = ' ';
                                             }
                                             
                                             ?>
@@ -182,17 +204,28 @@
                                                     @endforeach
 
                                                 </select></td>
-                                            <td class="bg-red-300">5</td>
+                                            <td class="bg-[#EEECE1] m-0"><select
+                                                    name="class[{{ $c }}][{{ $i }}][number]"
+                                                    class="p-2   bg-[#EEECE1] m-0">
+                                                    <option></option>
+                                                    @for ($o = 1; $o < 8; $o++)
+                                                        <option value="{{ $o }}"
+                                                            {{ $asdasdsad == $o ? 'selected' : '' }}>
+                                                            {{ $o }}
+                                                        </option>
+                                                    @endfor
+
+                                                </select></td>
                                             <td><input
                                                     name='class[{{ $c }}][{{ $i }}][subject_id]'
                                                     type="text" value="{{ $teec }}">
                                             </td>
-                                            <td class="bg-red-300" class="bg-red-300">{{ $i }}</td>
+                                            <td class="bg-[#EEECE1]">{{ $i }}</td>
 
                                         </tr>
                                     @endfor
-                                    <tr class="total-hours-row">
-                                        <td colspan="4">مجموع الحصص 32</td>
+                                    <tr class="total-hours-row bg-[#4F6228] ">
+                                        <td colspan="4" class="p-2 text-white">مجموع الحصص 32</td>
                                     </tr>
 
                                 </tbody>
@@ -217,6 +250,10 @@
 
                     </div>
                 </div>
+            </div>
+
+
+        </form>
 
     </body>
 

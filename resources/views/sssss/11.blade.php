@@ -25,15 +25,17 @@
                     if (isset($scc) && $scc != null) {
                         $teeee = $scc->teacher_id;
                         $teec = $scc->subject_id;
+                        $asdasdsad = $scc->schedule_data;
                     } else {
                         $teeee = ' ';
                         $teec = '  ';
+                        $asdasdsad = ' ';
                     }
 
                     ?>
                     <td style="border: 1px solid #000;"> {{ $teeee }}
                     </td>
-                    <td style="border: 1px solid #000;">5</td>
+                    <td style="border: 1px solid #000;">{{ $asdasdsad }}</td>
                     <td style="border: 1px solid #000;">
                         {{ $teec }}
                     </td>

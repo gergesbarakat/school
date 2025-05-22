@@ -20,37 +20,31 @@
             @csrf
             <div class = "p-4  text-right w-2/6 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
                 role="alert">
-                أولاً قبل البدء في تعبئة الاستمارة يجب عليكِ معرفة نصاب كل معلمة والمواد المسندة لها .
+                {{ $settings->where('name', 'home1')->first()->text }}
+            </div>
+            <div class = "p-4  text-right w-2/6 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
+                role="alert">
+                {{ $settings->where('name', 'home2')->first()->text }}
 
             </div>
             <div class = "p-4  text-right w-2/6 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
                 role="alert">
-                ثانيًا بعد تعبئة الاستمارة قومي بإرسالها على بريدنا الإلكتروني jdwli@hotmail.com أو على واتساب
-                0506000795
+                {{ $settings->where('name', 'home3')->first()->text }}
 
             </div>
             <div class = "p-4  text-right w-2/6 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
                 role="alert">
-                ثالثًا بعد ارسال الاستمارة قومي بتحويل المبلغ إلى أحد حسابتنا البنكية المرسلة لكِ عبر الواتس آب أو تويتر
-                .
+                {{ $settings->where('name', 'home4')->first()->text }}
 
             </div>
             <div class = "p-4  text-right w-2/6 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
                 role="alert">
-                رابعًا بعد تحويل المبلغ سيتم البدء في تجهيز الجدول فورًا وسيكون الجدول جاهز خلال أقل من 24 ساعة بإذن
-                الله تعالى .
+                {{ $settings->where('name', 'home5')->first()->text }}
 
             </div>
             <div class = "p-4  text-right w-2/6 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
                 role="alert">
-                خامسًا المعلومات الخاطئة تتسب في تأخير تسليم الجدول لكم لذلك نرجوا التأكد من ( اسناد المواد للمعلمات )
-                قبل الارسال .
-
-            </div>
-            <div class = "p-4  text-right w-2/6 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800"
-                role="alert">
-                سادسًا للاستفسار أو الملاحظات يمكنكم التواصل معنا ( اتصال - واتس آب ) عبر الرقم 795 6000 050 على مدار
-                الساعة .
+                {{ $settings->where('name', 'home6')->first()->text }}
 
             </div>
             <table dir="rtl"
@@ -217,7 +211,7 @@
                                     إدارة تعليم محافظة ظهران الجنوب </option>
                                 <option>إدارة التعليم بمحافظة شرورة</option>
                             </select>
-                         </td>
+                        </td>
                     </tr>
                     <tr>
                         <td style="border: 1px solid #000;">3</td>
@@ -244,13 +238,10 @@
                         <td style="border: 1px solid #000;">5</td>
                         <td style="border: 1px solid #000;">جوال للتواصل</td>
                         <td style="border: 1px solid #000;">
-                            <input type="text"
-                            name="phone"
-                            pattern="05\d{8}"
-                            title="رقم الهاتف يجب ان يبدا ب 05 ويتكون من 10 ارقام"
-                            value="{{ old('phone', optional(Auth::guard('school')->user())->phone) }}"
-                            class="border rounded p-2 w-full"
-                            required>
+                            <input type="text" name="phone" pattern="05\d{8}"
+                                title="رقم الهاتف يجب ان يبدا ب 05 ويتكون من 10 ارقام"
+                                value="{{ old('phone', optional(Auth::guard('school')->user())->phone) }}"
+                                class="border rounded p-2 w-full" required>
                         </td>
                     </tr>
                 </tbody>

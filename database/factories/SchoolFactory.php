@@ -3,12 +3,19 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\School>
  */
 class SchoolFactory extends Factory
 {
+    /**
+     * The current password being used by the factory.
+     */
+    protected static ?string $password;
+
     /**
      * Define the model's default state.
      *
@@ -18,15 +25,14 @@ class SchoolFactory extends Factory
     {
         return [
             'name' => fake()->name(),
-         'address'=> fake()->streetAddress(),
-        'postal_code'=> fake()->postcode(),
-        'country'=> fake()->country(),
-        'state'=> fake()->city(),
-        'area'=> fake()->citySuffix(),
-        'manager_name'=> fake()->name(),
-        'phone'=> fake()->e164PhoneNumber(),
-        'email'=> fake()->safeEmailDomain(),
-        'logo'=> fake()->imageUrl(),
-           ];
+            'email' => fake()->unique()->safeEmail(),
+             'password' => static::$password ??= Hash::make('Aassdd++010000'),
+            'remember_token' => Str::random(10),
+        ];
     }
+
+    /**
+     * Indicate that the model's email address should be unverified.
+     */
+
 }

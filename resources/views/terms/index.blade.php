@@ -21,8 +21,7 @@
                     </div>
                 @endif
 
-                <table id='asd' class="min-w-full table-auto border-collapse border border-gray-300"
-                    dir="rtl">
+                <table id='asd' class="min-w-full table-auto border-collapse border border-gray-300" dir="rtl">
                     <thead>
                         <tr>
                             <th
@@ -41,13 +40,12 @@
                                 <tr class="odd:bg-gray-100 rowid">
 
 
-                                    <td
-                                        class=" px-4 py-2 bg-red-200 text-black border border-lg border-black text-sm">
+                                    <td class=" px-4 py-2 bg-red-200 text-black border border-lg border-black text-sm">
                                         {{ ++$row }}</td>
 
                                     <td class=" border border-lg border-black text-sm">
                                         <input type="text" id="text{{ $row }}"
-                                            name="text[{{ $row }}] "   value=" {{ $term->text }}"
+                                            name="text[{{ $row }}] " value=" {{ $term->text }}"
                                             class="  block w-full px-4 py-2 border   shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
                                     </td>
 
@@ -93,7 +91,7 @@
                         </a>
                     </div>
                     <div class="flex  w-1/2        justify-start">
-                        <input type="submit" value='التالي '
+                        <input type="submit" value='ارسال '
                             class='bg-[#1E293B] text-center w-full text-xl text-white px-4 py-2   hover:bg-blue-600'
                             name="" id="">
                     </div>
@@ -125,7 +123,7 @@
                                     ${newRowNumber}</td>
 
                                 <td class=" border border-lg border-black text-sm">
-                                    <input type="text" id="text${newRowNumber}" name="text[] "  
+                                    <input type="text" id="text${newRowNumber}" name="text[] "
                                         class="  block w-full px-4 py-2 border   shadow-sm focus:outline-none focus:ring-1 focus:ring-blue-500">
                                     </input>
                                 </td>

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\School;
+use App\Models\Setting;
 use App\Models\Subject;
+
 use App\Models\Teacher;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,26 +21,31 @@ class TeacherController extends Controller
             return view('teachers.index', compact('teachers'));
         } else {
             if (Auth::guard('school')->check()) {
-                $request->validate([
-                    'area' => 'required',
-                    'number_of_classes' => 'required',
-                    'manager_name' => 'required',
-                    'phone' => ['required', 'regex:/^05\d{8}$/'],
+                if ($request->area) {
+                    $request->validate([
+                        'area' => 'required',
+                        'number_of_classes' => 'required',
+                        'manager_name' => 'required',
+                        'phone' => ['required', 'regex:/^05\d{8}$/'],
 
-                ]);
-                School::where('id', Auth::guard('school')->user()->id)->update([
-                    'area' => $request->area,
-                    'number_of_classes' => $request->number_of_classes,
-                    'manager_name' => $request->manager_name,
-                    'phone' => $request->phone,
-                ]);
+                    ]);
+                    School::where('id', Auth::guard('school')->user()->id)->update([
+                        'area' => $request->area,
+                        'number_of_classes' => $request->number_of_classes,
+                        'manager_name' => $request->manager_name,
+                        'phone' => $request->phone,
+                    ]);
+                }
+                $settings = Setting::all();
 
                 $teachers = Teacher::where('school_id', Auth::guard('school')->user()->id)->get();
             } else {
                 // For 'web' guard, show all teachers
+                $settings = Setting::all();
+
                 $teachers = Teacher::all();
             }
-            return view('teachers.index', compact('teachers'));
+            return view('teachers.index', compact('teachers', 'settings'));
         }
     }
 

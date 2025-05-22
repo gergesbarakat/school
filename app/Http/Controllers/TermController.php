@@ -7,6 +7,9 @@ use App\Http\Requests\StoreTermRequest;
 use App\Http\Requests\UpdateTermRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Classroom;
+use App\Models\Schedule;
+
 class TermController extends Controller
 {
     /**
@@ -14,27 +17,82 @@ class TermController extends Controller
      */
     public function index(Request $request)
     {
-        if($request->input('text') && count($request->input('text')) > 0 ){
-                Term::where(column: 'school_id',operator: Auth::guard('school')->user()->id )->delete();
 
-                foreach($request->input('text') as $ted){
-                    if(!empty($ted)){
+        if ($request->input('text') && count($request->input('text')) > 0) {
+            Term::where(column: 'school_id', operator: Auth::guard('school')->user()->id)->delete();
+
+            foreach ($request->input('text') as $ted) {
+                if (!empty($ted)) {
 
 
 
                     Term::create([
                         'school_id' => Auth::guard('school')->user()->id,
                         'text' => $ted,
-                    ]);}
+                    ]);
                 }
-                return view(view: 'welcome' );
+            }
+            return view(view: 'welcome');
+        } else {
 
 
 
-        }else{
-            $terms = Term::where('school_id',Auth::guard('school')->user()->id)->get();
-            return view('terms.index',data: ['terms' => $terms]);
 
+            if ($request->grade_class) {
+
+                $classroom = Classroom::where('name', $request->grade_class)->get()->first();
+                foreach ($request->class as $idd => $col) {
+
+                    foreach ($col as $id => $g) {
+                        if (count(Schedule::where('school_id', Auth::guard('school')->user()->id)->where('row_id', $id)->where('class_id', $idd)->where('grade_id', $classroom->grade_id)->where('classroom_id', $classroom->id)->get()) > 0) {
+                            if (count(Schedule::where('school_id', Auth::guard('school')->user()->id)->where('row_id', $id)->where('class_id', $idd)->where('grade_id', $classroom->grade_id)->where('classroom_id', $classroom->id)->get()) > 1) {
+                                Schedule::where('school_id', Auth::guard('school')->user()->id)->where('row_id', $id)->where('class_id', $idd)->where('grade_id', $classroom->grade_id)->where('classroom_id', $classroom->id)->delete();
+
+                                $nn = Schedule::create([
+                                    'school_id' => Auth::guard('school')->user()->id,
+                                    'grade_id' => $classroom->grade_id,
+                                    'classroom_id' => $classroom->id,
+                                    'class_id' => $idd,
+                                    'row_id' => $id,
+                                    'teacher_id' => $g['teacher_id'],
+                                    'classes_per_week' => '',
+                                    'subject_id' => $g['subject_id'],
+                                    'schedule_data' => $g['number'],
+                                ]);
+                            } else {
+                                Schedule::where('school_id', Auth::guard('school')->user()->id)->where('row_id', $id)->where('class_id', $idd)->where('grade_id', $classroom->grade_id)->where('classroom_id', $classroom->id)->update([
+                                    'school_id' => Auth::guard('school')->user()->id,
+                                    'grade_id' => $classroom->grade_id,
+                                    'classroom_id' => $classroom->id,
+                                    'class_id' => $idd,
+                                    'row_id' => $id,
+                                    'teacher_id' => $g['teacher_id'],
+                                    'classes_per_week' => '',
+                                    'subject_id' => $g['subject_id'],
+                                    'schedule_data' => $g['number'],
+
+                                ]);
+                            }
+                        } else {
+                            Schedule::create([
+                                'school_id' => Auth::guard('school')->user()->id,
+                                'grade_id' => $classroom->grade_id,
+                                'classroom_id' => $classroom->id,
+                                'class_id' => $idd,
+                                'row_id' => $id,
+                                'teacher_id' => $g['teacher_id'],
+                                'classes_per_week' => '',
+                                'subject_id' => $g['subject_id'],
+                                'schedule_data' => $g['number'],
+
+                            ]);
+                        }
+                    }
+                }
+            }
+
+            $terms = Term::where('school_id', Auth::guard('school')->user()->id)->get();
+            return view('terms.index', data: ['terms' => $terms]);
         }
     }
 

@@ -1,7 +1,7 @@
 <table dir="rtl" style="width: 50%; text-align: center; border-collapse: collapse; border: 1px solid #000;">
 
-    <thead >
-        <tr style="border: 1px solid #000;"  >
+    <thead>
+        <tr style="border: 1px solid #000;">
             <th colspan='7'>
                 أولاً قبل البدء في تعبئة الاستمارة يجب عليكِ معرفة نصاب كل معلمة والمواد المسندة لها .
 
